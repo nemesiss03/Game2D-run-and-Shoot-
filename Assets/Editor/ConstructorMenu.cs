@@ -104,8 +104,8 @@ public static class ConstructorMenu
             Crema, new Vector2(0f, 150f), new Vector2(1000f, 60f), TextAnchor.MiddleCenter);
         sub.fontStyle = FontStyle.BoldAndItalic;
 
-        Button bJugar = CrearBoton(panelPrincipal.transform, "BotonJugar", "JUGAR", new Vector2(0f, 20f), new Vector2(520f, 112f), Dorado);
-        Button bConfig = CrearBoton(panelPrincipal.transform, "BotonConfig", "CONFIGURACIÓN", new Vector2(0f, -105f), new Vector2(520f, 112f), Crema);
+        Button bJugar = CrearBoton(panelPrincipal.transform, "BotonJugar", "EMPEZAR", new Vector2(0f, 20f), new Vector2(520f, 112f), Dorado);
+        Button bConfig = CrearBoton(panelPrincipal.transform, "BotonConfig", "OPCIONES", new Vector2(0f, -105f), new Vector2(520f, 112f), Crema);
         Button bSalir = CrearBoton(panelPrincipal.transform, "BotonSalir", "SALIR", new Vector2(0f, -230f), new Vector2(520f, 112f), new Color(1f, 0.55f, 0.5f, 1f));
 
         Text version = CrearTexto(panelPrincipal.transform, "Version", "SKY WARS · v1.0", 26,
@@ -119,7 +119,7 @@ public static class ConstructorMenu
         CrearBoton(marcoJugar, "BotonVolver", "VOLVER", new Vector2(0f, -185f), new Vector2(340f, 84f), new Color(0.85f, 0.85f, 0.9f, 1f));
 
         // ==================== SOLO PC ====================
-        RectTransform marcoLocal = CrearMarco(panelLocal.transform, "SOLO PC");
+        RectTransform marcoLocal = CrearMarco(panelLocal.transform, "JUGAR");
         Button bUnJugador = CrearBoton(marcoLocal, "Boton1Jugador", "1 JUGADOR", new Vector2(0f, 90f), new Vector2(560f, 110f), Dorado);
         Button bDosJugadores = CrearBoton(marcoLocal, "Boton2Jugadores", "2 JUGADORES", new Vector2(0f, -40f), new Vector2(560f, 110f), Crema);
         Button bVolverLocal = CrearBoton(marcoLocal, "BotonVolver", "VOLVER", new Vector2(0f, -185f), new Vector2(340f, 84f), new Color(0.85f, 0.85f, 0.9f, 1f));
@@ -157,22 +157,25 @@ public static class ConstructorMenu
         Button bVolverOnline = CrearBoton(marcoOnline, "BotonVolver", "VOLVER", new Vector2(0f, -265f), new Vector2(340f, 78f), new Color(0.85f, 0.85f, 0.9f, 1f));
 
         // ==================== CONFIGURACIÓN ====================
-        RectTransform marcoConfig = CrearMarco(panelConfig.transform, "CONFIGURACIÓN");
+        RectTransform marcoConfig = CrearMarco(panelConfig.transform, "OPCIONES");
 
-        Text tVolLabel = CrearTexto(marcoConfig, "LabelVolumen", "VOLUMEN", 36, Crema,
-            new Vector2(0f, 150f), new Vector2(700f, 48f), TextAnchor.MiddleCenter);
+        CrearTexto(marcoConfig, "LabelVolumen", "SONIDO GENERAL", 36, Crema,
+            new Vector2(0f, 175f), new Vector2(700f, 48f), TextAnchor.MiddleCenter);
 
-        Slider slider = CrearSlider(marcoConfig, "SliderVolumen", new Vector2(0f, 90f), new Vector2(620f, 40f));
+        Slider slider = CrearSlider(marcoConfig, "SliderVolumen", new Vector2(0f, 120f), new Vector2(620f, 40f));
 
         Text tVol = CrearTexto(marcoConfig, "TextoVolumen", "100%", 32, Dorado,
-            new Vector2(0f, 35f), new Vector2(400f, 44f), TextAnchor.MiddleCenter);
+            new Vector2(0f, 70f), new Vector2(400f, 44f), TextAnchor.MiddleCenter);
 
-        Text tPantalla = CrearTexto(marcoConfig, "LabelPantalla", "PANTALLA COMPLETA", 36, Crema,
-            new Vector2(-70f, -50f), new Vector2(560f, 48f), TextAnchor.MiddleCenter);
+        CrearTexto(marcoConfig, "LabelBrillo", "BRILLO", 36, Crema,
+            new Vector2(0f, -20f), new Vector2(700f, 48f), TextAnchor.MiddleCenter);
 
-        Toggle toggle = CrearToggle(marcoConfig, "TogglePantalla", new Vector2(300f, -50f));
+        Slider sliderBrillo = CrearSlider(marcoConfig, "SliderBrillo", new Vector2(0f, -75f), new Vector2(620f, 40f));
 
-        Button bVolverConfig = CrearBoton(marcoConfig, "BotonVolver", "VOLVER", new Vector2(0f, -200f), new Vector2(340f, 84f), new Color(0.85f, 0.85f, 0.9f, 1f));
+        Text tBrillo = CrearTexto(marcoConfig, "TextoBrillo", "100%", 32, Dorado,
+            new Vector2(0f, -125f), new Vector2(400f, 44f), TextAnchor.MiddleCenter);
+
+        Button bVolverConfig = CrearBoton(marcoConfig, "BotonVolver", "VOLVER", new Vector2(0f, -240f), new Vector2(340f, 84f), new Color(0.85f, 0.85f, 0.9f, 1f));
 
         // ==================== ANIMADOR ====================
         MenuAnimador anim = canvasGO.AddComponent<MenuAnimador>();
@@ -192,7 +195,8 @@ public static class ConstructorMenu
         menu.textoOnline = tOnline;
         menu.textoVolumen = tVol;
         menu.sliderVolumen = slider;
-        menu.togglePantalla = toggle;
+        menu.sliderBrillo = sliderBrillo;
+        menu.textoBrillo = tBrillo;
         menu.campoIp = campoIp;
 
         UnityEventTools.AddPersistentListener(bJugar.onClick, menu.IrAJugar);
@@ -207,7 +211,7 @@ public static class ConstructorMenu
         Transform marcoLocalT = panelLocal.transform.Find("Marco");
         UnityEventTools.AddPersistentListener(marcoLocalT.Find("Boton1Jugador").GetComponent<Button>().onClick, menu.JugarUnJugador);
         UnityEventTools.AddPersistentListener(marcoLocalT.Find("Boton2Jugadores").GetComponent<Button>().onClick, menu.IrADosJugadores);
-        UnityEventTools.AddPersistentListener(marcoLocalT.Find("BotonVolver").GetComponent<Button>().onClick, menu.IrAJugar);
+        UnityEventTools.AddPersistentListener(marcoLocalT.Find("BotonVolver").GetComponent<Button>().onClick, menu.IrAInicio);
 
         Transform marcoDispT = panelDispositivos.transform.Find("Marco");
         UnityEventTools.AddPersistentListener(marcoDispT.Find("J1Teclado").GetComponent<Button>().onClick, menu.J1Teclado);
@@ -244,10 +248,12 @@ public static class ConstructorMenu
     {
         var lista = new System.Collections.Generic.List<EditorBuildSettingsScene>(EditorBuildSettings.scenes);
 
-        lista.RemoveAll(s => s.path == RutaEscena || s.path == "Assets/Scenes/SampleScene.unity");
+        lista.RemoveAll(s => s.path == RutaEscena || s.path == "Assets/Scenes/Boss.unity" ||
+                             s.path == "Assets/Scenes/Nivel1.unity" || s.path == "Assets/Scenes/SampleScene.unity");
 
         lista.Insert(0, new EditorBuildSettingsScene(RutaEscena, true));
-        lista.Insert(1, new EditorBuildSettingsScene("Assets/Scenes/SampleScene.unity", true));
+        lista.Insert(1, new EditorBuildSettingsScene("Assets/Scenes/Boss.unity", true));
+        lista.Insert(2, new EditorBuildSettingsScene("Assets/Scenes/Nivel1.unity", true));
 
         EditorBuildSettings.scenes = lista.ToArray();
     }

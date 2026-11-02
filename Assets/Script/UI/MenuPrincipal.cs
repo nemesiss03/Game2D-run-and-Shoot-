@@ -24,6 +24,8 @@ public class MenuPrincipal : MonoBehaviour
 
     [Header("Ajustes")]
     public Slider sliderVolumen;
+    public Slider sliderBrillo;
+    public Text textoBrillo;
     public Toggle togglePantalla;
 
     [Header("Online")]
@@ -41,6 +43,14 @@ public class MenuPrincipal : MonoBehaviour
         {
             sliderVolumen.value = ConfiguracionPartida.Volumen;
             sliderVolumen.onValueChanged.AddListener(CambiarVolumen);
+        }
+
+        if (sliderBrillo != null)
+        {
+            sliderBrillo.minValue = ConfiguracionPartida.BrilloMinimo;
+            sliderBrillo.maxValue = 1f;
+            sliderBrillo.value = ConfiguracionPartida.Brillo;
+            sliderBrillo.onValueChanged.AddListener(CambiarBrillo);
         }
 
         if (togglePantalla != null)
@@ -88,7 +98,8 @@ public class MenuPrincipal : MonoBehaviour
     }
 
     public void IrAInicio() { Mostrar(panelPrincipal); }
-    public void IrAJugar() { Mostrar(panelJugar); }
+    // "Empezar" lleva directo a elegir 1 o 2 jugadores (panelJugar queda para el modo online)
+    public void IrAJugar() { Mostrar(panelLocal); }
     public void IrALocal() { Mostrar(panelLocal); }
     public void IrAConfig() { Mostrar(panelConfig); }
 
@@ -186,6 +197,15 @@ public class MenuPrincipal : MonoBehaviour
         if (textoVolumen != null) textoVolumen.text = Mathf.RoundToInt(valor * 100f) + "%";
     }
 
+    public void CambiarBrillo(float valor)
+    {
+        ConfiguracionPartida.Brillo = valor;
+        ConfiguracionPartida.AplicarAjustes();
+        ConfiguracionPartida.Guardar();
+
+        if (textoBrillo != null) textoBrillo.text = Mathf.RoundToInt(valor * 100f) + "%";
+    }
+
     public void CambiarPantalla(bool valor)
     {
         ConfiguracionPartida.PantallaCompleta = valor;
@@ -203,5 +223,8 @@ public class MenuPrincipal : MonoBehaviour
 
         if (textoVolumen != null)
             textoVolumen.text = Mathf.RoundToInt(ConfiguracionPartida.Volumen * 100f) + "%";
+
+        if (textoBrillo != null)
+            textoBrillo.text = Mathf.RoundToInt(ConfiguracionPartida.Brillo * 100f) + "%";
     }
 }

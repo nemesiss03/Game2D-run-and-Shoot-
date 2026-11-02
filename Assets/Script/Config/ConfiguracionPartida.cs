@@ -19,7 +19,7 @@ public static class ConfiguracionPartida
     public const int PuertoPorDefecto = 7777;
 
     public const string EscenaMenu = "MenuPrincipal";
-    public const string EscenaArena = "SampleScene";
+    public const string EscenaArena = "Boss";
 
     public static ModoJuego Modo = ModoJuego.UnJugador;
     public static TipoDispositivo Dispositivo1 = TipoDispositivo.TecladoRaton;
@@ -46,10 +46,13 @@ public static class ConfiguracionPartida
     // --- Ajustes ---
     public static float Volumen = 1f;
     public static bool PantallaCompleta = true;
+    public const float BrilloMinimo = 0.3f;
+    public static float Brillo = 1f;   // 1 = normal, BrilloMinimo = lo más oscuro
 
     public static void Cargar()
     {
         Volumen = PlayerPrefs.GetFloat("skywars_volumen", 1f);
+        Brillo = Mathf.Clamp(PlayerPrefs.GetFloat("skywars_brillo", 1f), BrilloMinimo, 1f);
         PantallaCompleta = PlayerPrefs.GetInt("skywars_pantalla", 1) == 1;
         AplicarAjustes();
     }
@@ -57,6 +60,7 @@ public static class ConfiguracionPartida
     public static void Guardar()
     {
         PlayerPrefs.SetFloat("skywars_volumen", Volumen);
+        PlayerPrefs.SetFloat("skywars_brillo", Brillo);
         PlayerPrefs.SetInt("skywars_pantalla", PantallaCompleta ? 1 : 0);
         PlayerPrefs.Save();
     }
@@ -65,5 +69,6 @@ public static class ConfiguracionPartida
     {
         AudioListener.volume = Mathf.Clamp01(Volumen);
         Screen.fullScreen = PantallaCompleta;
+        BrilloGlobal.Actualizar();
     }
 }

@@ -4098,10 +4098,6 @@ PrefabInstance:
       propertyPath: m_SortingLayerID
       value: 282131219
       objectReference: {fileID: 0}
-    - target: {fileID: 5202894797585888859, guid: 11cba6678d8c15d4e9021f41de8194d1, type: 3}
-      propertyPath: salto.altura
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 7592465574019153659, guid: 11cba6678d8c15d4e9021f41de8194d1, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5.08
