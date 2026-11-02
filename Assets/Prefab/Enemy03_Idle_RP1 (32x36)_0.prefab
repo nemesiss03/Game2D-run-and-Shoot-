@@ -133,7 +133,7 @@ BoxCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 13b313082d734154fb373568bc375326, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -210,6 +210,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   distanciaFrente: 0.5
+  distanciaPiso: 0.6
+  tiempoEntreGiros: 0.3
   danio: 4
   enfriamientoDanio: 1
   spriteMiraDerecha: 1

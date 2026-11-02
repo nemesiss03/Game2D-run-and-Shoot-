@@ -14,6 +14,18 @@ TextureImporter:
   - first:
       213: 5006722515616286978
     second: Flag_3
+  - first:
+      213: 4412164869933323507
+    second: Bandera_0
+  - first:
+      213: -1901212617177982150
+    second: Bandera_1
+  - first:
+      213: 6651866183043984322
+    second: Bandera_2
+  - first:
+      213: -2733843128781325003
+    second: Bandera_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -60,7 +72,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 15
+  spritePixelsToUnits: 20
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -124,89 +136,89 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Flag_0
+      name: Bandera_0
       rect:
         serializedVersion: 2
-        x: 8
+        x: 0
         y: 0
-        width: 32
+        width: 48
         height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 749492c85b53d0910800000000000000
-      internalID: 1805158079502305607
+      spriteID: 3f455d292982b3d30800000000000000
+      internalID: 4412164869933323507
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Flag_1
+      name: Bandera_1
       rect:
         serializedVersion: 2
-        x: 56
+        x: 48
         y: 0
-        width: 32
+        width: 48
         height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 07de8bee41d8e59f0800000000000000
-      internalID: -477789389410734736
+      spriteID: a3b9d9e92398d95e0800000000000000
+      internalID: -1901212617177982150
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Flag_2
+      name: Bandera_2
       rect:
         serializedVersion: 2
-        x: 104
+        x: 96
         y: 0
-        width: 32
+        width: 48
         height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b98e4ba1bbb605f80800000000000000
-      internalID: -8119871676797884261
+      spriteID: 2cb25c5ec0d205c50800000000000000
+      internalID: 6651866183043984322
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Flag_3
+      name: Bandera_3
       rect:
         serializedVersion: 2
-        x: 152
+        x: 144
         y: 0
-        width: 32
+        width: 48
         height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2094248e9937b7540800000000000000
-      internalID: 5006722515616286978
+      spriteID: 53db85da8207f0ad0800000000000000
+      internalID: -2733843128781325003
       vertices: []
       indices: 
       edges: []
@@ -225,6 +237,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
+      Bandera_0: 4412164869933323507
+      Bandera_1: -1901212617177982150
+      Bandera_2: 6651866183043984322
+      Bandera_3: -2733843128781325003
       Flag_0: 1805158079502305607
       Flag_1: -477789389410734736
       Flag_2: -8119871676797884261

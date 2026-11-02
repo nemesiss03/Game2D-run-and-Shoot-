@@ -14,6 +14,18 @@ TextureImporter:
   - first:
       213: 8985439187258846068
     second: Chest_3
+  - first:
+      213: -8929714730241205940
+    second: Cofre_0
+  - first:
+      213: 6633912632109107967
+    second: Cofre_1
+  - first:
+      213: -1666214963285175400
+    second: Cofre_2
+  - first:
+      213: 4684826187487271924
+    second: Cofre_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -60,7 +72,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 15
+  spritePixelsToUnits: 22
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -124,89 +136,89 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Chest_0
+      name: Cofre_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 27
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1cb13755f8e94b6b0800000000000000
-      internalID: -5281422124547630143
+      spriteID: c495666b3c7431480800000000000000
+      internalID: -8929714730241205940
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Chest_1
+      name: Cofre_1
       rect:
         serializedVersion: 2
-        x: 31
+        x: 32
         y: 0
-        width: 28
-        height: 18
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 43fa0ce01a3fc6140800000000000000
-      internalID: 4714410783012859700
+      spriteID: ffa07d31464601c50800000000000000
+      internalID: 6633912632109107967
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Chest_2
+      name: Cofre_2
       rect:
         serializedVersion: 2
-        x: 63
+        x: 64
         y: 0
-        width: 31
-        height: 21
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1eb21d98f6799feb0800000000000000
-      internalID: -4685547431992939551
+      spriteID: 89352f1a15a60e8e0800000000000000
+      internalID: -1666214963285175400
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Chest_3
+      name: Cofre_3
       rect:
         serializedVersion: 2
-        x: 95
+        x: 96
         y: 0
-        width: 33
-        height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 32
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 47b207b7551b2bc70800000000000000
-      internalID: 8985439187258846068
+      spriteID: 4fb50a3a898d30140800000000000000
+      internalID: 4684826187487271924
       vertices: []
       indices: 
       edges: []
@@ -229,6 +241,10 @@ TextureImporter:
       Chest_1: 4714410783012859700
       Chest_2: -4685547431992939551
       Chest_3: 8985439187258846068
+      Cofre_0: -8929714730241205940
+      Cofre_1: 6633912632109107967
+      Cofre_2: -1666214963285175400
+      Cofre_3: 4684826187487271924
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

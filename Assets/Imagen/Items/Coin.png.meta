@@ -14,6 +14,18 @@ TextureImporter:
   - first:
       213: 5522397121026081838
     second: Coin_3
+  - first:
+      213: -5122786757355938225
+    second: Moneda_0
+  - first:
+      213: 4755696099241941651
+    second: Moneda_1
+  - first:
+      213: 5371020726509871548
+    second: Moneda_2
+  - first:
+      213: 2741205165806278252
+    second: Moneda_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -60,7 +72,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 15
+  spritePixelsToUnits: 18
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -124,89 +136,89 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Coin_0
+      name: Moneda_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 9
-        height: 9
+        width: 10
+        height: 10
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d81b24142116aa1d0800000000000000
-      internalID: -3338749442709606003
+      spriteID: f4e59bbf59438e8b0800000000000000
+      internalID: -5122786757355938225
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Coin_1
+      name: Moneda_1
       rect:
         serializedVersion: 2
         x: 10
         y: 0
-        width: 9
+        width: 10
         height: 10
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e317a37e6bf782150800000000000000
-      internalID: 5848064539680731454
+      spriteID: 39ad60fc760aff140800000000000000
+      internalID: 4755696099241941651
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Coin_2
+      name: Moneda_2
       rect:
         serializedVersion: 2
         x: 20
         y: 0
-        width: 9
+        width: 10
         height: 10
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: af188ba524ab13bd0800000000000000
-      internalID: -2652133911391862278
+      spriteID: cb1a1e4d4e2b98a40800000000000000
+      internalID: 5371020726509871548
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Coin_3
+      name: Moneda_3
       rect:
         serializedVersion: 2
-        x: 29
+        x: 30
         y: 0
-        width: 11
-        height: 9
+        width: 10
+        height: 10
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e2446633cee73ac40800000000000000
-      internalID: 5522397121026081838
+      spriteID: c6659542397ba0620800000000000000
+      internalID: 2741205165806278252
       vertices: []
       indices: 
       edges: []
@@ -229,6 +241,10 @@ TextureImporter:
       Coin_1: 5848064539680731454
       Coin_2: -2652133911391862278
       Coin_3: 5522397121026081838
+      Moneda_0: -5122786757355938225
+      Moneda_1: 4755696099241941651
+      Moneda_2: 5371020726509871548
+      Moneda_3: 2741205165806278252
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

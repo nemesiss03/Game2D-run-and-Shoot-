@@ -35,8 +35,49 @@ public class UltimoSuelo : MonoBehaviour
         for (int i = 0; i < cerca.Length; i++)
             if (cerca[i].GetComponentInParent<ZonaDanio>() != null) return;
 
+        if (!SueloFirmeBajoLosPies()) return;   // no guardar en el borde de una plataforma
+
         PosicionSegura = rb.position + Vector2.up * 0.1f;
         proximo = Time.time + intervalo;
+    }
+
+    /// <summary>
+    /// Suelo sólido bajo los dos extremos de los pies. En un borde solo uno de los dos
+    /// toca suelo, y volver ahí dejaría al jugador a medio caer o incrustado.
+    /// </summary>
+    bool SueloFirmeBajoLosPies()
+    {
+        Bounds b = default(Bounds);
+        bool hay = false;
+
+        foreach (Collider2D col in GetComponents<Collider2D>())
+        {
+            if (col.isTrigger) continue;
+            if (!hay) { b = col.bounds; hay = true; }
+            else b.Encapsulate(col.bounds);
+        }
+
+        if (!hay) return true;
+
+        const float margen = 0.08f;
+        float y = b.min.y + 0.1f;
+
+        return HaySueloBajo(new Vector2(b.min.x + margen, y)) &&
+               HaySueloBajo(new Vector2(b.max.x - margen, y));
+    }
+
+    bool HaySueloBajo(Vector2 origen)
+    {
+        RaycastHit2D[] hits = Physics2D.RaycastAll(origen, Vector2.down, 0.35f);
+        for (int i = 0; i < hits.Length; i++)
+        {
+            Collider2D c = hits[i].collider;
+            if (c == null || c.isTrigger) continue;
+            if (c.GetComponentInParent<Salud>() != null) continue;
+            if (c.GetComponentInParent<ZonaDanio>() != null) continue;
+            return true;
+        }
+        return false;
     }
 
     public void Teletransportar(Vector2 destino)

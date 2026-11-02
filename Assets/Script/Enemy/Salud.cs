@@ -15,6 +15,8 @@ public class Salud : MonoBehaviour
     public bool destruirAlMorir = true;
     [Tooltip("Mientras esté activo no recibe daño (por ejemplo durante el dash).")]
     public bool invulnerable = false;
+    [Tooltip("Puntos que da al morir (solo enemigos). El jefe da 1000 si se deja en 100.")]
+    public int puntosAlMorir = Puntuacion.PuntosEnemigo;
 
     [Header("Eventos")]
     public UnityEvent alMorir = new UnityEvent();
@@ -30,11 +32,13 @@ public class Salud : MonoBehaviour
     public event Action Muerte;
 
     bool esJefe;
+    bool murio;
 
     void Awake()
     {
         VidaActual = vidaMaxima;
         esJefe = GetComponent<JefeFlotante>() != null;
+        if (esJefe && puntosAlMorir == Puntuacion.PuntosEnemigo) puntosAlMorir = 1000;
     }
 
     void Start()
@@ -83,9 +87,16 @@ public class Salud : MonoBehaviour
 
     public void Morir()
     {
+        if (murio) return;
+        murio = true;
+
         if (VidaActual > 0f) VidaActual = 0f;
 
-        if (equipo == Equipo.Enemigo) EfectoDestruccion();
+        if (equipo == Equipo.Enemigo)
+        {
+            EfectoDestruccion();
+            Puntuacion.Sumar(puntosAlMorir, transform.position, new Color(1f, 0.55f, 0.35f, 1f));
+        }
 
         if (Muerte != null) Muerte();
         if (alMorir != null) alMorir.Invoke();

@@ -169,6 +169,7 @@ public class HUDJuego : MonoBehaviour
 
     void Reiniciar()
     {
+        Puntuacion.RestaurarCheckpoint();
         Scene escena = SceneManager.GetActiveScene();
 
         if (escena.buildIndex >= 0) SceneManager.LoadScene(escena.buildIndex);

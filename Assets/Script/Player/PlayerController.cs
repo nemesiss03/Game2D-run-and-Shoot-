@@ -20,10 +20,18 @@ public class PlayerController : MonoBehaviour
     [Header("Salto (detalles)")]
     public AjustesSalto salto = new AjustesSalto();
 
+    [Header("Doble salto")]
+    [Tooltip("Saltos extra en el aire (1 = doble salto). Se recuperan al tocar suelo.")]
+    public int saltosExtra = 1;
+    [Tooltip("Fuerza del salto extra respecto al salto normal.")]
+    [Range(0.5f, 1.2f)] public float fuerzaSaltoExtra = 0.92f;
+
     [Header("Dash")]
     public float velocidadDash = 22f;
     public float duracionDash = 0.18f;
     public float enfriamientoDash = 1.1f;
+    [Tooltip("Segundos entre una copia de la estela y la siguiente.")]
+    public float intervaloEstela = 0.025f;
 
     [Header("Aliento de fuego")]
     public GameObject bolaFuegoPrefab;
@@ -69,6 +77,18 @@ public class PlayerController : MonoBehaviour
         get { return enfriando ? Mathf.Clamp01((Time.time - inicioEnfriamiento) / tiempoEnfriamiento) : 1f; }
     }
 
+    /// <summary>0 = recién usado, 1 = el dash está listo (para la barra del HUD).</summary>
+    public float ProgresoDash
+    {
+        get
+        {
+            if (Time.time < finDash) return 0f;
+            return Mathf.Clamp01(1f - (proximoDash - Time.time) / Mathf.Max(0.01f, enfriamientoDash));
+        }
+    }
+
+    public int SaltosExtraRestantes { get { return Mathf.Max(0, saltosExtra - saltosAireUsados); } }
+
     public EntradaJugador Entrada { get; private set; }
 
     /// <summary>Permite que la red sustituya la entrada local (jugador remoto).</summary>
@@ -91,6 +111,10 @@ public class PlayerController : MonoBehaviour
     int cargas;
     bool enfriando;
     float inicioEnfriamiento;
+
+    int saltosAireUsados;
+    bool pideSaltoAire;
+    float proximaEstela;
 
     float finDash;
     float proximoDash;
@@ -166,7 +190,11 @@ public class PlayerController : MonoBehaviour
         FijarLado(mirandoIzquierda);
 
         // --- Salto ---
-        if (Entrada.SaltoPulsado()) tiempoPulsoSalto = Time.time;
+        if (Entrada.SaltoPulsado())
+        {
+            tiempoPulsoSalto = Time.time;
+            pideSaltoAire = true;
+        }
         // --- Dash ---
         if (Entrada.DashPulsado() && Time.time >= proximoDash && Time.time >= finDash)
             IniciarDash();
@@ -205,10 +233,23 @@ public class PlayerController : MonoBehaviour
             rb.linearVelocity = new Vector2(direccionDash * velocidadDash, 0f);
             enSuelo = false;
             tiempoPulsoSalto = -99f;     // no guardar saltos pedidos durante el dash
+            pideSaltoAire = false;
+
+            if (Time.time >= proximaEstela)
+            {
+                proximaEstela = Time.time + intervaloEstela;
+                EfectosMovimiento.Fantasma(gameObject);
+            }
+
             return;
         }
 
-        if (enSuelo) tiempoUltimoSuelo = Time.time;
+        if (enSuelo)
+        {
+            tiempoUltimoSuelo = Time.time;
+            // Solo cuenta como aterrizaje si no está subiendo (así el propio salto no recarga el doble salto)
+            if (vel.y <= 0.5f) saltosAireUsados = 0;
+        }
 
         vel.x = h * velocidad;
 
@@ -220,8 +261,21 @@ public class PlayerController : MonoBehaviour
             vel.y = salto.VelocidadInicial;
             tiempoPulsoSalto = -99f;
             tiempoUltimoSuelo = -99f;
+            pideSaltoAire = false;
             AudioJuego.Tocar(SonidoId.Salto);
         }
+        else if (pideSaltoAire && !puedeSaltar && !caidaLibre &&
+                 saltosAireUsados < saltosExtra && !HaySueloCerca())
+        {
+            // Doble salto: impulso nuevo en el aire y anillo bajo los pies
+            vel.y = salto.VelocidadInicial * fuerzaSaltoExtra;
+            saltosAireUsados++;
+            tiempoPulsoSalto = -99f;
+            AudioJuego.Tocar(SonidoId.Salto);
+            EfectosMovimiento.AnilloSalto(PosicionPies());
+        }
+
+        pideSaltoAire = false;
 
         if (caidaLibre)
         {
@@ -251,6 +305,41 @@ public class PlayerController : MonoBehaviour
         rb.linearVelocity = vel;
 
         enSuelo = false;
+    }
+
+    /// <summary>Punto bajo el dragón (donde nacen los anillos y el polvo).</summary>
+    Vector3 PosicionPies()
+    {
+        BoxCollider2D caja = GetComponent<BoxCollider2D>();
+        if (caja == null) return transform.position;
+
+        Bounds b = caja.bounds;
+        return new Vector3(b.center.x, b.min.y, 0f);
+    }
+
+    /// <summary>
+    /// Hay suelo justo debajo: en ese caso un salto pulsado se guarda para el aterrizaje
+    /// en vez de gastar el salto extra.
+    /// </summary>
+    bool HaySueloCerca()
+    {
+        if (rb.linearVelocity.y > 0.5f) return false;
+
+        BoxCollider2D caja = GetComponent<BoxCollider2D>();
+        if (caja == null) return false;
+
+        Bounds b = caja.bounds;
+        RaycastHit2D[] hits = Physics2D.RaycastAll(new Vector2(b.center.x, b.min.y + 0.05f), Vector2.down, 0.45f);
+
+        for (int i = 0; i < hits.Length; i++)
+        {
+            Collider2D c = hits[i].collider;
+            if (c == null || c.isTrigger || c.transform.IsChildOf(transform)) continue;
+            if (c.GetComponentInParent<Salud>() != null) continue;
+            return true;
+        }
+
+        return false;
     }
 
     // --- Detección de suelo por contacto ---
@@ -376,6 +465,8 @@ public class PlayerController : MonoBehaviour
         if (animador != null) animador.SetTrigger(hashDash);
 
         AudioJuego.SonidoDash();
+        EfectosMovimiento.PolvoDash(PosicionPies() + Vector3.up * 0.5f, direccionDash);
+        proximaEstela = 0f;
 
         if (salud != null) salud.invulnerable = true;
         Invoke("FinInvulnerabilidadDash", duracionDash);

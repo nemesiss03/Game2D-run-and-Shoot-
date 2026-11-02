@@ -147,6 +147,7 @@ public class MenuPrincipal : MonoBehaviour
 
     void Jugar()
     {
+        Puntuacion.Reiniciar();
         SceneManager.LoadScene(ConfiguracionPartida.EscenaArena);
     }
 

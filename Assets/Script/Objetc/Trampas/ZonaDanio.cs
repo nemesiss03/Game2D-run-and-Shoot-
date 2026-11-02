@@ -78,7 +78,13 @@ public class ZonaDanio : MonoBehaviour
 
         float ahora = Time.time;
         float proximo;
-        if (proximoGolpe.TryGetValue(s, out proximo) && ahora < proximo) return;
+        if (proximoGolpe.TryGetValue(s, out proximo) && ahora < proximo)
+        {
+            // Aunque el daño esté en pausa, el abismo SIEMPRE devuelve al jugador al suelo;
+            // si no, una segunda caída seguida lo dejaría cayendo para siempre.
+            if (esJugador && DevuelveAlSuelo) Reaparecer(s);
+            return;
+        }
         proximoGolpe[s] = ahora + segundosEntreGolpes;
 
         float d;
