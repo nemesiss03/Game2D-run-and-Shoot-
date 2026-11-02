@@ -17,6 +17,7 @@ public abstract class EntradaJugador
 {
     public abstract float Horizontal();
     public abstract bool SaltoPulsado();
+    public virtual bool SaltoMantenido() { return true; }
     public abstract bool DashPulsado();
     public abstract bool DisparoMantenido();
     public abstract bool EnfriamientoPulsado();
@@ -71,6 +72,12 @@ public class EntradaTecladoRaton : EntradaJugador
         var kb = Keyboard.current;
         if (kb == null) return false;
         return kb.spaceKey.wasPressedThisFrame || kb.wKey.wasPressedThisFrame;
+    }
+
+    public override bool SaltoMantenido()
+    {
+        var kb = Keyboard.current;
+        return kb != null && (kb.spaceKey.isPressed || kb.wKey.isPressed);
     }
 
     public override bool DashPulsado()
@@ -128,7 +135,7 @@ public class EntradaTeclado : EntradaJugador
     public override bool SaltoPulsado()
     {
         var kb = Keyboard.current;
-        return kb != null && kb.upArrowKey.wasPressedThisFrame;
+        return kb != null && kb.upArrowKey.isPressed;
     }
 
     public override bool DashPulsado()
@@ -197,7 +204,7 @@ public class EntradaMando : EntradaJugador
     public override bool SaltoPulsado()
     {
         var g = Mando;
-        return g != null && g.buttonSouth.wasPressedThisFrame;
+        return g != null && g.buttonSouth.isPressed;
     }
 
     public override bool DashPulsado()

@@ -16,6 +16,10 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Velocidad máxima de caída (evita que el dragón se acelere sin control en la caída libre).")]
     public float velocidadMaximaCaida = 9f;
 
+
+    [Header("Salto (detalles)")]
+    public AjustesSalto salto = new AjustesSalto();
+
     [Header("Dash")]
     public float velocidadDash = 22f;
     public float duracionDash = 0.18f;
@@ -79,6 +83,8 @@ public class PlayerController : MonoBehaviour
 
     float h;
     bool pideSalto;
+    float tiempoPulsoSalto = -99f;
+    float tiempoUltimoSuelo = -99f;
     bool enSuelo;
     float proximoDisparo;
 
@@ -160,8 +166,7 @@ public class PlayerController : MonoBehaviour
         FijarLado(mirandoIzquierda);
 
         // --- Salto ---
-        if (Entrada.SaltoPulsado()) pideSalto = true;
-
+        if (Entrada.SaltoPulsado()) tiempoPulsoSalto = Time.time;
         // --- Dash ---
         if (Entrada.DashPulsado() && Time.time >= proximoDash && Time.time >= finDash)
             IniciarDash();
@@ -199,16 +204,22 @@ public class PlayerController : MonoBehaviour
             rb.gravityScale = 0f;
             rb.linearVelocity = new Vector2(direccionDash * velocidadDash, 0f);
             enSuelo = false;
+            tiempoPulsoSalto = -99f;     // no guardar saltos pedidos durante el dash
             return;
         }
 
-        if (rb.gravityScale == 0f && !caidaLibre) rb.gravityScale = 1f;
+        if (enSuelo) tiempoUltimoSuelo = Time.time;
 
         vel.x = h * velocidad;
 
-        if (pideSalto && enSuelo && !caidaLibre)
+        bool pidioSalto = Time.time - tiempoPulsoSalto <= salto.tiempoBuffer;
+        bool puedeSaltar = Time.time - tiempoUltimoSuelo <= salto.tiempoCoyote;
+
+        if (pidioSalto && puedeSaltar && !caidaLibre)
         {
-            vel.y = fuerzaSalto;
+            vel.y = salto.VelocidadInicial;
+            tiempoPulsoSalto = -99f;
+            tiempoUltimoSuelo = -99f;
             AudioJuego.Tocar(SonidoId.Salto);
         }
 
@@ -223,6 +234,19 @@ public class PlayerController : MonoBehaviour
             enSuelo = false;
             return;
         }
+
+        // Gravedad según la fase del salto
+        bool mantiene = Entrada != null && Entrada.SaltoMantenido();
+        float escala = salto.Gravedad / Mathf.Abs(Physics2D.gravity.y);
+
+        if (vel.y < 0f) escala *= salto.multiplicadorCaida;
+        else if (vel.y > 0f && !mantiene) escala *= salto.multiplicadorCorte;
+
+        if (!enSuelo && Mathf.Abs(vel.y) < salto.umbralCima) escala *= salto.multiplicadorCima;
+
+        rb.gravityScale = escala;
+
+        if (vel.y < -salto.velocidadMaximaCaida) vel.y = -salto.velocidadMaximaCaida;
 
         rb.linearVelocity = vel;
 
