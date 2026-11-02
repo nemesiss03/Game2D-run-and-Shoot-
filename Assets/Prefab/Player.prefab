@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 8647598182768314291}
   - component: {fileID: 4099828421315409246}
   - component: {fileID: 6873078888182023445}
+  - component: {fileID: 7266356581385885134}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -86,7 +87,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 282131219
-  m_SortingLayer: 1
+  m_SortingLayer: 3
   m_SortingOrder: 5
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 1365e7b854d08344c905207c5b8f99a5, type: 3}
@@ -115,6 +116,16 @@ MonoBehaviour:
   velocidad: 7
   fuerzaSalto: 12
   velocidadMaximaCaida: 9
+  salto:
+    altura: 2.4
+    tiempoSubida: 0.36
+    multiplicadorCaida: 1.8
+    multiplicadorCorte: 2.8
+    velocidadMaximaCaida: 20
+    tiempoCoyote: 0.08
+    tiempoBuffer: 0.1
+    umbralCima: 1.5
+    multiplicadorCima: 0.6
   velocidadDash: 22
   duracionDash: 0.18
   enfriamientoDash: 1.1
@@ -337,6 +348,43 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 2f3e39077c2da764bae49f801b6d6574, type: 3}
   - {fileID: 21300000, guid: d0c2776149a15c846979acb90f60c490, type: 3}
   - {fileID: 21300000, guid: e08b2bc38fbf30844b79800cbc9fea90, type: 3}
+--- !u!70 &7266356581385885134
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2472659420544243794}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0.06401536, y: -0.7497809}
+  m_Size: {x: 0.55555314, y: 0.9812093}
+  m_Direction: 0
 --- !u!1 &3743659245598738891
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,11 +8,14 @@ public class EnemigoTerrestre : MonoBehaviour
     public float velocidadPatrulla = 2f;
     public float velocidadPersecucion = 3.6f;
     public float rangoDeteccion = 7f;
-    [Tooltip("Capa del suelo y las paredes. Si se deja vacía usa la capa Ground.")]
-    public LayerMask capaSuelo;
 
     [Header("Sensores")]
+    [Tooltip("Capas que cuentan como suelo o pared. Déjalo en Nothing para usar todas (se ignoran jugadores, enemigos y balas).")]
+    public LayerMask capaSuelo;
     public float distanciaFrente = 0.5f;
+    public float distanciaPiso = 0.6f;
+    [Tooltip("Tiempo mínimo entre un giro y el siguiente.")]
+    public float tiempoEntreGiros = 0.3f;
 
     [Header("Daño por contacto")]
     public float danio = 4f;
@@ -27,17 +30,19 @@ public class EnemigoTerrestre : MonoBehaviour
     SpriteRenderer sr;
     int direccion = 1;
     float proximoDanio;
+    float proximoGiro;
+    bool hayPiso = true;
+    bool hayPared;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
+        if (col == null) col = GetComponentInChildren<Collider2D>();
         sr = GetComponentInChildren<SpriteRenderer>();
         rb.freezeRotation = true;
 
-        if (capaSuelo.value == 0) capaSuelo = LayerMask.GetMask("Ground");
-        if (capaSuelo.value == 0)
-            Debug.LogWarning("EnemigoTerrestre: no hay capa de suelo asignada.", this);
+        if (capaSuelo.value == 0) capaSuelo = ~0;   // todas las capas
 
         direccion = Random.value < 0.5f ? -1 : 1;
     }
@@ -57,16 +62,21 @@ public class EnemigoTerrestre : MonoBehaviour
             }
         }
 
-        if (!HayPisoAdelante() || HayParedAdelante())
+        hayPiso = HayPisoAdelante();
+        hayPared = HayParedAdelante();
+
+        if (!hayPiso || hayPared)
         {
-            if (persiguiendo)
+            // Se detiene; si patrulla, gira una sola vez y espera
+            if (!persiguiendo && Time.time >= proximoGiro)
             {
-                // Se detiene en el borde en vez de caerse
-                rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
-                ActualizarSprite();
-                return;
+                direccion = -direccion;
+                proximoGiro = Time.time + tiempoEntreGiros;
             }
-            direccion = -direccion;
+
+            rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
+            ActualizarSprite();
+            return;
         }
 
         float v = persiguiendo ? velocidadPersecucion : velocidadPatrulla;
@@ -83,7 +93,7 @@ public class EnemigoTerrestre : MonoBehaviour
     {
         Bounds b = col.bounds;
         float x = (direccion > 0 ? b.max.x : b.min.x) + direccion * 0.15f;
-        return Golpea(new Vector2(x, b.min.y + 0.1f), Vector2.down, 0.5f);
+        return Golpea(new Vector2(x, b.min.y + 0.1f), Vector2.down, distanciaPiso);
     }
 
     bool HayParedAdelante()
@@ -115,5 +125,24 @@ public class EnemigoTerrestre : MonoBehaviour
 
         s.RecibirDanio(danio);
         proximoDanio = Time.time + enfriamientoDanio;
+    }
+
+    // Selecciona al enemigo en Play: verde = el sensor ve suelo/libre, rojo = bloqueado
+    void OnDrawGizmosSelected()
+    {
+        Collider2D c = col != null ? col : GetComponent<Collider2D>();
+        if (c == null) return;
+
+        Bounds b = c.bounds;
+        int d = direccion == 0 ? 1 : direccion;
+        float x = d > 0 ? b.max.x : b.min.x;
+
+        Gizmos.color = hayPiso ? Color.green : Color.red;
+        Vector3 oPiso = new Vector3(x + d * 0.15f, b.min.y + 0.1f, 0f);
+        Gizmos.DrawLine(oPiso, oPiso + Vector3.down * distanciaPiso);
+
+        Gizmos.color = hayPared ? Color.red : Color.green;
+        Vector3 oPared = new Vector3(x, b.center.y, 0f);
+        Gizmos.DrawLine(oPared, oPared + Vector3.right * d * distanciaFrente);
     }
 }
