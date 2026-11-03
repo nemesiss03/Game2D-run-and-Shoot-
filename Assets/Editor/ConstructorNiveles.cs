@@ -16,7 +16,7 @@ using UnityEngine.Tilemaps;
 /// Menú: Sky Wars / Construir niveles.
 /// OJO: reconstruye el terreno y los objetos de los dos niveles desde cero.
 /// </summary>
-public static class ConstructorNiveles
+public static partial class ConstructorNiveles
 {
     const string RutaN1 = "Assets/Scenes/Nivel1.unity";
     const string RutaN2 = "Assets/Scenes/Nivel2.unity";
@@ -60,11 +60,15 @@ public static class ConstructorNiveles
         CrearPrefabs();
 
         LimpiarNivel1();
-        AssetDatabase.CopyAsset(RutaN1, RutaN2);
+
+        // Nivel2 ya existe y puede tener retoques a mano: solo se crea de cero si falta.
+        // Para rehacerlo usa "Sky Wars > Reconstruir Nivel 2 (montaña)".
+        bool crearNivel2 = !File.Exists(RutaN2);
+        if (crearNivel2) AssetDatabase.CopyAsset(RutaN1, RutaN2);
         AssetDatabase.Refresh();
 
         ConstruirNivel1();
-        ConstruirNivel2();
+        if (crearNivel2) ConstruirNivel2();
         RegistrarEnBuildSettings();
 
         Debug.Log("ConstructorNiveles: Nivel1 y Nivel2 construidos.");
@@ -332,7 +336,7 @@ public static class ConstructorNiveles
     static readonly string[] BorrarPorNombre =
     {
         "1_0", "2_0", "Grass(Group)", "Enemy03_Idle_RP1 (32x36)_0", "GenerationEnemi", "Abismos", "lasto Pint",
-        "FondoParallax", "Decoracion", "Objetos", "Enemigos", "Portales", "Meta", "ObjetivoCamara", "Arranque", "Zonas"
+        "FondoParallax", "Decoracion", "Objetos", "Enemigos", "Portales", "Meta", "ObjetivoCamara", "Arranque", "Zonas", "Ambiente", "AmbienteNieve", "FondoMontana"
     };
 
     static void LimpiarNivel1()
@@ -388,7 +392,8 @@ public static class ConstructorNiveles
         // abismo 112..115
         Tramo(altura, 116, 148, -4);
         Tramo(altura, 148, 158, -2);    // colina de 2
-        Tramo(altura, 158, 180, -4);
+        Tramo(altura, 158, 218, -4);     // sigue tras la bandera: el dragon camina hacia la montana
+        Tramo(altura, 218, 224, 40);     // pared final
 
         PintarSuelo(suelo, altura);
 
@@ -406,6 +411,7 @@ public static class ConstructorNiveles
 
         // Fondo con parallax y bosque
         CrearParallax(0.92f);
+        CrearParallaxMontana("FondoMontana", 10, 0f);   // aparece poco a poco al salir caminando
         Decorar(true, 1);
 
         // Cofres: unos en el suelo y otros en lo alto
@@ -422,8 +428,11 @@ public static class ConstructorNiveles
         // Portales: solo en el suelo, sacan enemigos terrestres
         CrearPortales(enemigo, new[] { 20, 45, 60, 80, 100, 125, 140, 162 }, 1.3f, 8f, 13f, 1);
 
-        CrearAbismo(-8f, 180f);
+        CrearAmbiente(false);
+        CrearAmbiente(true, "AmbienteNieve", false);
+        CrearAbismo(-8f, 218f);
         GameObject banderaN1 = CrearBandera(172, "Nivel2");
+        if (banderaN1 != null) banderaN1.GetComponent<Bandera>().caminarAlSiguiente = true;
 
         // Zonas de pelea: una a mitad del nivel y otra que guarda la bandera
         CrearZona("Zona1", 47f, superficie[47], 2, null);
@@ -708,6 +717,35 @@ public static class ConstructorNiveles
     }
 
     /// <summary>Franja bajo el nivel: caer en ella quita 50 de vida y devuelve al último suelo.</summary>
+    /// <summary>Hojas cayendo (bosque) o nieve (montaña) por toda la pantalla.</summary>
+    static GameObject CrearAmbiente(bool nieve, string nombre = "Ambiente", bool activo = true)
+    {
+        GameObject g = new GameObject(nombre);
+        AmbienteCayendo a = g.AddComponent<AmbienteCayendo>();
+
+        if (nieve)
+        {
+            a.tipo = AmbienteCayendo.Tipo.Nieve;
+            a.cantidad = 90;
+            a.velocidadMinima = 1.2f;
+            a.velocidadMaxima = 2.8f;
+            a.viento = -0.5f;
+            a.balanceo = 0.7f;
+        }
+        else
+        {
+            a.tipo = AmbienteCayendo.Tipo.Hojas;
+            a.cantidad = 45;
+            a.velocidadMinima = 0.8f;
+            a.velocidadMaxima = 2f;
+            a.viento = 0.8f;
+            a.balanceo = 1f;
+        }
+
+        g.SetActive(activo);
+        return g;
+    }
+
     static void CrearAbismo(float x0, float x1)
     {
         GameObject g = new GameObject("Abismo");

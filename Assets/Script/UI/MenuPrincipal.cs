@@ -148,6 +148,7 @@ public class MenuPrincipal : MonoBehaviour
     void Jugar()
     {
         Puntuacion.Reiniciar();
+        CinematicaIntro.Reiniciar();
         SceneManager.LoadScene(ConfiguracionPartida.EscenaArena);
     }
 

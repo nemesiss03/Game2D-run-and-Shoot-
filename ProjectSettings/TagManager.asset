@@ -55,6 +55,9 @@ TagManager:
   - name: Player
     uniqueID: 282131219
     locked: 0
+  - name: tramps
+    uniqueID: 3110265865
+    locked: 0
   m_RenderingLayers:
   - Default
   m_MigratedRenderPipelines: []

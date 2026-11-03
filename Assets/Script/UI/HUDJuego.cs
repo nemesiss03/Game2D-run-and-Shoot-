@@ -145,6 +145,9 @@ public class HUDJuego : MonoBehaviour
     public void MostrarVictoria()
     {
         MostrarFinal("¡VICTORIA!", new Color(0.45f, 1f, 0.55f, 1f));
+
+        if (textoReinicio != null)
+            textoReinicio.text = "PUNTOS: " + Puntuacion.Total + "\n" + textoReinicio.text;
     }
 
     void MostrarFinal(string mensaje, Color color)

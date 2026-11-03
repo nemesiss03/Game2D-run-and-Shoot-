@@ -26,6 +26,14 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Fuerza del salto extra respecto al salto normal.")]
     [Range(0.5f, 1.2f)] public float fuerzaSaltoExtra = 0.92f;
 
+    [Header("Caída libre (fase 2 del jefe)")]
+    [Tooltip("Cuánto se puede subir y bajar respecto a la altura inicial de la caída.")]
+    public float rangoVerticalCaida = 3f;
+    public float velocidadVerticalCaida = 6.5f;
+    [Tooltip("En la caída libre el dash dura más (más tiempo invulnerable) y se recarga antes.")]
+    public float duracionDashCaida = 0.28f;
+    [Range(0.2f, 1f)] public float factorEnfriamientoCaida = 0.55f;
+
     [Header("Dash")]
     public float velocidadDash = 22f;
     public float duracionDash = 0.18f;
@@ -43,6 +51,14 @@ public class PlayerController : MonoBehaviour
     public float danio = 12f;
     public float velocidadProyectil = 17f;
     public float vidaProyectil = 3f;
+
+    [Header("Apuntado con el ratón")]
+    [Tooltip("Si el ratón está más cerca que esto del arma, el dragón no cambia de lado ni de ángulo.")]
+    public float zonaMuertaApuntado = 1.1f;
+    [Tooltip("Cuánto debe pasar el ratón al otro lado del dragón para que se voltee.")]
+    public float margenVolteo = 0.35f;
+    [Tooltip("Segundos mínimos entre un volteo y el siguiente.")]
+    public float pausaEntreVolteos = 0.12f;
 
     [Header("Cabeza")]
     public CabezaDragon cabeza;
@@ -83,7 +99,8 @@ public class PlayerController : MonoBehaviour
         get
         {
             if (Time.time < finDash) return 0f;
-            return Mathf.Clamp01(1f - (proximoDash - Time.time) / Mathf.Max(0.01f, enfriamientoDash));
+            float total = enfriamientoUsado > 0f ? enfriamientoUsado : enfriamientoDash;
+            return Mathf.Clamp01(1f - (proximoDash - Time.time) / Mathf.Max(0.01f, total));
         }
     }
 
@@ -115,6 +132,12 @@ public class PlayerController : MonoBehaviour
     int saltosAireUsados;
     bool pideSaltoAire;
     float proximaEstela;
+    float movimientoVertical;
+    bool volandoVictoria;
+    float tiempoVuelo;
+    Vector2 ultimaDireccionAim = Vector2.right;
+    float ultimoVolteo = -99f;
+    float enfriamientoUsado = -1f;
 
     float finDash;
     float proximoDash;
@@ -125,6 +148,7 @@ public class PlayerController : MonoBehaviour
     static readonly int hashVelocidad = Animator.StringToHash("Velocidad");
     static readonly int hashDash = Animator.StringToHash("Dash");
     static readonly int hashMuerto = Animator.StringToHash("Muerto");
+    static readonly int hashEnAire = Animator.StringToHash("EnAire");
 
     void Awake()
     {
@@ -183,6 +207,7 @@ public class PlayerController : MonoBehaviour
 
         // --- Movimiento horizontal ---
         h = Entrada.Horizontal();
+        movimientoVertical = caidaLibre ? Entrada.Vertical() : 0f;
 
         if (h > 0.01f) mirandoIzquierda = false;
         else if (h < -0.01f) mirandoIzquierda = true;
@@ -224,6 +249,12 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         if (muerto || controladoPorRed) return;
+
+        if (volandoVictoria)
+        {
+            VolarDeVictoria();
+            return;
+        }
 
         Vector2 vel = rb.linearVelocity;
 
@@ -284,7 +315,20 @@ public class PlayerController : MonoBehaviour
             rb.gravityScale = 0f;
             vel.y = 0f;
             rb.linearVelocity = vel;
-            rb.position = new Vector2(rb.position.x, alturaCaida);
+
+            // Se puede subir y bajar un poco para esquivar (láseres, balas), sin salirse de la pantalla
+            float minY = alturaCaida - rangoVerticalCaida;
+            float maxY = alturaCaida + rangoVerticalCaida;
+
+            Camera c = Camera.main;
+            if (c != null)
+            {
+                minY = Mathf.Max(minY, c.transform.position.y - c.orthographicSize + 1.2f);
+                maxY = Mathf.Min(maxY, c.transform.position.y + c.orthographicSize - 1.8f);
+            }
+
+            float nuevaY = Mathf.Clamp(rb.position.y + movimientoVertical * velocidadVerticalCaida * Time.fixedDeltaTime, minY, Mathf.Max(minY, maxY));
+            rb.position = new Vector2(rb.position.x, nuevaY);
             enSuelo = false;
             return;
         }
@@ -366,6 +410,10 @@ public class PlayerController : MonoBehaviour
 
         float rapidez = (controlActivo && !muerto) ? Mathf.Abs(rb.linearVelocity.x) : 0f;
         animador.SetFloat(hashVelocidad, rapidez);
+
+        // En el aire (salto, caída o fase de caída libre del jefe) bate las alas
+        bool enAire = !muerto && (caidaLibre || volandoVictoria || Time.time - tiempoUltimoSuelo > 0.12f);
+        animador.SetBool(hashEnAire, enAire && !controladoPorRed);
     }
 
     /// <summary>Voltea cuerpo, cabeza y arma a la vez.</summary>
@@ -383,23 +431,62 @@ public class PlayerController : MonoBehaviour
         if (cabeza == null && arma == null) return;
 
         Vector2 facing = mirandoIzquierda ? Vector2.left : Vector2.right;
-        Vector3 origen = arma != null ? arma.PosicionPunta : (cabeza.pivoteCabeza != null ? cabeza.pivoteCabeza.position : transform.position);
+
+        // El pivote del arma no se mueve al voltearla; la punta del cañón sí (cambia de lado).
+        // Medir desde la punta hacía que, con el ratón sobre el personaje, el apuntado y el volteo
+        // se contradijeran en cada fotograma (parpadeo de izquierda a derecha).
+        Vector3 pivote = arma != null && arma.pivote != null ? arma.pivote.position
+            : (cabeza != null && cabeza.pivoteCabeza != null ? cabeza.pivoteCabeza.position : transform.position);
+        Vector3 punta = arma != null ? arma.PosicionPunta : pivote;
 
         Transform objetivoAuto = JefeFlotante.Activo != null ? JefeFlotante.Activo.transform : null;
-        Vector2 dir = Entrada.DireccionAim(origen, facing, objetivoAuto);
+        Vector2 desdePivote = Entrada.DireccionAim(pivote, facing, objetivoAuto);
+
+        // Con el ratón muy cerca del arma no se cambia ni de lado ni de ángulo
+        float distancia = desdePivote.magnitude;
+        bool enZonaMuerta = Entrada.ApuntaAUnPunto && distancia < zonaMuertaApuntado;
+
+        Vector2 dir;
+        if (enZonaMuerta)
+        {
+            dir = ultimaDireccionAim;
+        }
+        else
+        {
+            // Lejos del arma se apunta desde la punta (más preciso); cerca, desde el pivote (estable)
+            Vector2 desdeLaPunta = Entrada.DireccionAim(punta, facing, objetivoAuto);
+
+            if (!Entrada.ApuntaAUnPunto)
+            {
+                dir = desdeLaPunta;
+            }
+            else
+            {
+                // Cerca del arma manda el pivote (estable) y poco a poco pasa a mandar la punta (más precisa)
+                float peso = Mathf.Clamp01((distancia - zonaMuertaApuntado) / (zonaMuertaApuntado * 0.9f));
+                dir = Vector2.Lerp(desdePivote.normalized, desdeLaPunta.normalized, peso);
+                if (dir.sqrMagnitude < 0.0001f) dir = desdePivote;
+            }
+
+            ultimaDireccionAim = dir;
+        }
 
         // El disparo sale del arma: la cabeza se queda quieta para que el recorte
         // del cuerpo y de la cabeza siga encajando como en el fotograma original.
         if (arma != null) arma.Apuntar(dir);
         if (cabeza != null) cabeza.Relajar();
 
-        // Si no se mueve, el cuerpo se gira hacia donde apunta (como un tirador)
-        if (Mathf.Abs(h) < 0.01f && Mathf.Abs(dir.x) > 0.12f)
+        // Si no se mueve, el cuerpo se gira hacia donde apunta (como un tirador).
+        // Solo se voltea si el ratón pasa claramente al otro lado y con una pausa mínima entre volteos.
+        if (!enZonaMuerta && Mathf.Abs(h) < 0.01f)
         {
-            bool izquierda = dir.x < 0f;
-            if (izquierda != mirandoIzquierda)
+            float x = desdePivote.x;
+            bool izquierda = x < 0f;
+
+            if (izquierda != mirandoIzquierda && Mathf.Abs(x) > margenVolteo && Time.time - ultimoVolteo >= pausaEntreVolteos)
             {
                 mirandoIzquierda = izquierda;
+                ultimoVolteo = Time.time;
                 FijarLado(mirandoIzquierda);
             }
         }
@@ -459,8 +546,11 @@ public class PlayerController : MonoBehaviour
         mirandoIzquierda = direccionDash < 0f;
         FijarLado(mirandoIzquierda);
 
-        finDash = Time.time + duracionDash;
-        proximoDash = Time.time + duracionDash + enfriamientoDash;
+        float duracion = caidaLibre ? duracionDashCaida : duracionDash;
+        enfriamientoUsado = caidaLibre ? enfriamientoDash * factorEnfriamientoCaida : enfriamientoDash;
+
+        finDash = Time.time + duracion;
+        proximoDash = Time.time + duracion + enfriamientoUsado;
 
         if (animador != null) animador.SetTrigger(hashDash);
 
@@ -469,7 +559,7 @@ public class PlayerController : MonoBehaviour
         proximaEstela = 0f;
 
         if (salud != null) salud.invulnerable = true;
-        Invoke("FinInvulnerabilidadDash", duracionDash);
+        Invoke("FinInvulnerabilidadDash", duracion);
     }
 
     void FinInvulnerabilidadDash()
@@ -515,6 +605,56 @@ public class PlayerController : MonoBehaviour
         }
 
         if (!quedanVivos && HUDJuego.Instancia != null) HUDJuego.Instancia.MostrarDerrota();
+    }
+
+    // ------------------------------------------------------------ cinemáticas
+    /// <summary>Gira al dragón (y su cabeza y su arma) hacia un lado sin necesidad de entrada del jugador.</summary>
+    public void MirarHacia(bool izquierda)
+    {
+        mirandoIzquierda = izquierda;
+        FijarLado(izquierda);
+    }
+
+    /// <summary>Apunta el arma en una dirección del mundo (cinemáticas). Dispara con Disparar().</summary>
+    public void ApuntarCinematica(Vector2 direccion)
+    {
+        if (arma != null) arma.Apuntar(direccion);
+        if (cabeza != null) cabeza.Relajar();
+    }
+
+    /// <summary>Celebración al derrotar al jefe: el dragón se eleva batiendo las alas.</summary>
+    public void IniciarVueloVictoria()
+    {
+        if (volandoVictoria || muerto) return;
+
+        volandoVictoria = true;
+        tiempoVuelo = 0f;
+        controlActivo = false;
+        enfriando = false;
+
+        if (salud != null) salud.invulnerable = true;
+        CancelInvoke();
+
+        rb.gravityScale = 0f;
+        rb.linearVelocity = Vector2.zero;
+        rb.bodyType = RigidbodyType2D.Kinematic;
+
+        MirarHacia(false);
+        if (cabeza != null) cabeza.Relajar();
+        if (arma != null) arma.Relajar();
+    }
+
+    void VolarDeVictoria()
+    {
+        tiempoVuelo += Time.fixedDeltaTime;
+
+        // Sube y avanza cada vez más rápido, con un suave balanceo de vuelo
+        float velocidadVuelo = Mathf.Min(9f, 1.5f + tiempoVuelo * 3f);
+        Vector2 direccion = new Vector2(0.75f, 0.65f).normalized;
+        float balanceo = Mathf.Sin(tiempoVuelo * 5f) * 1.2f;
+
+        Vector2 siguiente = rb.position + direccion * velocidadVuelo * Time.fixedDeltaTime + Vector2.up * balanceo * Time.fixedDeltaTime;
+        rb.MovePosition(siguiente);
     }
 
     /// <summary>El jefe llama a esto cuando la plataforma se destruye.</summary>

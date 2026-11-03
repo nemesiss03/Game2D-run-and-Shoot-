@@ -154,6 +154,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Bandera
   escenaSiguiente: Nivel2
   esperaAntesDeCargar: 2.2
+  caminarAlSiguiente: 0
+  segundosCaminando: 5
   frames:
   - {fileID: 4412164869933323507, guid: 5cd6328fa33c58a4a8ef33924d2a3425, type: 3}
   - {fileID: -1901212617177982150, guid: 5cd6328fa33c58a4a8ef33924d2a3425, type: 3}

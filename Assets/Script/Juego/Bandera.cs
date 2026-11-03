@@ -10,6 +10,11 @@ public class Bandera : MonoBehaviour
     public string escenaSiguiente = "Nivel2";
     public float esperaAntesDeCargar = 2.2f;
 
+    [Header("Paso caminando")]
+    [Tooltip("En vez de cortar a la escena siguiente, el dragón sigue andando mientras el escenario cambia (bosque a montaña).")]
+    public bool caminarAlSiguiente = false;
+    public float segundosCaminando = 5f;
+
     [Header("Aspecto")]
     public Sprite[] frames;
     public float fps = 7f;
@@ -59,6 +64,13 @@ public class Bandera : MonoBehaviour
 
         if (HUDJuego.Instancia != null)
             HUDJuego.Instancia.MostrarAviso("¡NIVEL COMPLETADO!   " + Puntuacion.Total + " puntos", esperaAntesDeCargar + 1f);
+
+        if (caminarAlSiguiente)
+        {
+            yield return new WaitForSeconds(0.8f);
+            yield return TransicionCaminando.Ejecutar(escenaSiguiente, segundosCaminando);
+            yield break;
+        }
 
         yield return new WaitForSeconds(esperaAntesDeCargar);
 

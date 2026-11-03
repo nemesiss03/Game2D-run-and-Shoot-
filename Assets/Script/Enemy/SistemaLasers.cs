@@ -13,22 +13,28 @@ public class SistemaLasers : MonoBehaviour
     static SistemaLasers instancia;
 
     [Header("Ciclo de cada láser")]
-    public float tiempoCarga = 1.7f;
+    public float tiempoCarga = 1.9f;
     [Tooltip("Parte de la carga (0 a 1) durante la que el láser sigue al jugador. Después queda fijo.")]
-    [Range(0.2f, 0.95f)] public float seguirHasta = 0.65f;
+    [Range(0.2f, 0.95f)] public float seguirHasta = 0.5f;
     public float duracionRayo = 0.4f;
     public float descansoMinimo = 2.4f;
     public float descansoMaximo = 4.2f;
-    [Tooltip("Cuántos láseres pueden estar cargando o disparando a la vez.")]
-    public int maxSimultaneos = 3;
+    [Tooltip("Cuántos láseres pueden estar cargando o disparando a la vez cuando la fase ya está avanzada.")]
+    public int maxSimultaneos = 2;
+    [Tooltip("Al empezar la fase solo dispara uno a la vez durante estos segundos.")]
+    public float segundosDeCalma = 8f;
 
     [Header("Daño")]
     public float danio = 14f;
-    public float radioImpacto = 0.55f;
+    [Tooltip("Mitad del ancho del rayo. Lo que se dibuja es exactamente lo que daña.")]
+    public float mitadAnchoRayo = 0.28f;
+    [Tooltip("Cuánto del cuerpo del dragón cuenta para el impacto (su colisión es de cerca de 0,7 de radio).")]
+    public float radioJugador = 0.3f;
 
     readonly List<GameObject> piezas = new List<GameObject>();
     int activos;
     bool encendido;
+    float inicio;
     Sprite circulo;
     Material materialLinea;
 
@@ -62,6 +68,7 @@ public class SistemaLasers : MonoBehaviour
     void Iniciar()
     {
         encendido = true;
+        inicio = Time.time;
 
         Camera cam = Camera.main;
         Vector2 c = cam != null ? (Vector2)cam.transform.position : Vector2.zero;
@@ -71,13 +78,14 @@ public class SistemaLasers : MonoBehaviour
         materialLinea = new Material(Shader.Find("Sprites/Default"));
         circulo = CrearCirculo();
 
-        // 5 posiciones repartidas por el borde de la pantalla
+        // 5 emisores arriba y abajo: sus rayos cruzan en diagonal o en vertical la fila del jugador,
+        // así se pueden esquivar moviéndose a los lados o subiendo y bajando.
         Vector2[] posiciones =
         {
-            new Vector2(c.x - mitadAncho + 0.8f, c.y + mitadAlto * 0.55f),
-            new Vector2(c.x - mitadAncho + 0.8f, c.y - mitadAlto * 0.15f),
-            new Vector2(c.x + mitadAncho - 0.8f, c.y + mitadAlto * 0.55f),
-            new Vector2(c.x + mitadAncho - 0.8f, c.y - mitadAlto * 0.15f),
+            new Vector2(c.x - mitadAncho * 0.62f, c.y + mitadAlto - 0.8f),
+            new Vector2(c.x + mitadAncho * 0.62f, c.y + mitadAlto - 0.8f),
+            new Vector2(c.x - mitadAncho * 0.62f, c.y - mitadAlto + 0.8f),
+            new Vector2(c.x + mitadAncho * 0.62f, c.y - mitadAlto + 0.8f),
             new Vector2(c.x, c.y - mitadAlto + 0.8f)
         };
 
@@ -104,7 +112,7 @@ public class SistemaLasers : MonoBehaviour
             Transform objetivo = Jugadores.MasCercano(posicion);
             if (objetivo == null) { yield return new WaitForSeconds(0.5f); continue; }
 
-            while (activos >= maxSimultaneos) yield return null;
+            while (activos >= LimiteActual()) yield return null;
             activos++;
 
             // ---- Carga: la línea sigue al jugador y luego queda fija
@@ -125,8 +133,8 @@ public class SistemaLasers : MonoBehaviour
                 bool fijado = p >= seguirHasta;
                 float parpadeo = fijado ? (Mathf.Sin(t * 50f) > 0f ? 1f : 0.35f) : 1f;
 
-                float ancho = Mathf.Lerp(0.03f, fijado ? 0.2f : 0.1f, p);
-                Color col = fijado ? new Color(1f, 0.2f, 0.15f, 0.95f * parpadeo) : new Color(1f, 0.5f, 0.3f, Mathf.Lerp(0.25f, 0.8f, p));
+                float ancho = fijado ? mitadAnchoRayo * 2f : Mathf.Lerp(0.03f, 0.1f, p / seguirHasta);
+                Color col = fijado ? new Color(1f, 0.2f, 0.15f, 0.55f * parpadeo) : new Color(1f, 0.5f, 0.3f, Mathf.Lerp(0.25f, 0.8f, p / seguirHasta));
 
                 PintarLinea(linea, posicion, dir, ancho, col);
 
@@ -148,7 +156,7 @@ public class SistemaLasers : MonoBehaviour
 
             while (d < duracionRayo && encendido)
             {
-                PintarLinea(linea, posicion, dir, 0.55f, new Color(1f, 0.95f, 0.85f, 1f));
+                PintarLinea(linea, posicion, dir, mitadAnchoRayo * 2f, new Color(1f, 0.95f, 0.85f, 1f));
                 anillo.color = new Color(1f, 1f, 1f, 1f);
 
                 if (!golpeado) golpeado = ComprobarImpacto(posicion, dir);
@@ -167,6 +175,11 @@ public class SistemaLasers : MonoBehaviour
         if (baseGO != null) Destroy(baseGO);
     }
 
+    int LimiteActual()
+    {
+        return Time.time - inicio < segundosDeCalma ? 1 : Mathf.Max(1, maxSimultaneos);
+    }
+
     bool ComprobarImpacto(Vector2 origen, Vector2 dir)
     {
         bool alguno = false;
@@ -182,7 +195,7 @@ public class SistemaLasers : MonoBehaviour
             Vector2 p = CentroDe(j.transform);
             float distancia = DistanciaASegmento(p, origen, origen + dir * LargoRayo);
 
-            if (distancia <= radioImpacto + 0.4f)
+            if (distancia <= mitadAnchoRayo + radioJugador)
             {
                 s.RecibirDanio(danio);   // el dash da invulnerabilidad: esquivable
                 alguno = true;

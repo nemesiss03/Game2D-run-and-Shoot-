@@ -18,10 +18,16 @@ public abstract class EntradaJugador
     public abstract float Horizontal();
     public abstract bool SaltoPulsado();
     public virtual bool SaltoMantenido() { return true; }
+
+    /// <summary>Subir (+1) o bajar (-1) durante la caída libre del jefe.</summary>
+    public virtual float Vertical() { return 0f; }
     public abstract bool DashPulsado();
     public abstract bool DisparoMantenido();
     public abstract bool EnfriamientoPulsado();
     public abstract bool TieneAimManual { get; }
+
+    /// <summary>Apunta a un punto de la pantalla (el ratón): cerca del jugador ese punto es ambiguo y se necesita una zona muerta.</summary>
+    public virtual bool ApuntaAUnPunto { get { return false; } }
 
     /// <summary>Dirección hacia la que debe apuntar la cabeza del dragón.</summary>
     public abstract Vector2 DireccionAim(Vector3 origen, Vector2 facing, Transform objetivoAuto);
@@ -80,6 +86,17 @@ public class EntradaTecladoRaton : EntradaJugador
         return kb != null && (kb.spaceKey.isPressed || kb.wKey.isPressed);
     }
 
+    public override float Vertical()
+    {
+        var kb = Keyboard.current;
+        if (kb == null) return 0f;
+
+        float v = 0f;
+        if (kb.wKey.isPressed || kb.spaceKey.isPressed || kb.upArrowKey.isPressed) v += 1f;
+        if (kb.sKey.isPressed || kb.downArrowKey.isPressed) v -= 1f;
+        return v;
+    }
+
     public override bool DashPulsado()
     {
         var kb = Keyboard.current;
@@ -103,6 +120,7 @@ public class EntradaTecladoRaton : EntradaJugador
     }
 
     public override bool TieneAimManual { get { return true; } }
+    public override bool ApuntaAUnPunto { get { return true; } }
 
     public override Vector2 DireccionAim(Vector3 origen, Vector2 facing, Transform objetivoAuto)
     {
@@ -136,6 +154,17 @@ public class EntradaTeclado : EntradaJugador
     {
         var kb = Keyboard.current;
         return kb != null && kb.upArrowKey.isPressed;
+    }
+
+    public override float Vertical()
+    {
+        var kb = Keyboard.current;
+        if (kb == null) return 0f;
+
+        float v = 0f;
+        if (kb.upArrowKey.isPressed) v += 1f;
+        if (kb.downArrowKey.isPressed) v -= 1f;
+        return v;
     }
 
     public override bool DashPulsado()
@@ -205,6 +234,17 @@ public class EntradaMando : EntradaJugador
     {
         var g = Mando;
         return g != null && g.buttonSouth.isPressed;
+    }
+
+    public override float Vertical()
+    {
+        var g = Mando;
+        if (g == null) return 0f;
+
+        float v = g.leftStick.y.ReadValue();
+        if (Mathf.Abs(v) < 0.25f) v = 0f;
+        if (g.buttonSouth.isPressed) v = 1f;
+        return v;
     }
 
     public override bool DashPulsado()

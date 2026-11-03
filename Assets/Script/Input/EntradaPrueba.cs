@@ -7,6 +7,7 @@ using UnityEngine;
 public class EntradaPrueba : EntradaJugador
 {
     public float horizontal;
+    public float vertical;
     public bool saltoMantenido;
     public bool disparo;
     public Vector2 apuntar = Vector2.right;
@@ -20,6 +21,7 @@ public class EntradaPrueba : EntradaJugador
     public void PulsarDash() { pulsarDash = true; }
 
     public override float Horizontal() { return horizontal; }
+    public override float Vertical() { return vertical; }
 
     public override bool SaltoPulsado()
     {

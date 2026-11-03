@@ -113,6 +113,10 @@ public class CabezaDragon : MonoBehaviour
             if (Base(cabezas[i].name) == baseCuerpo) return cabezas[i];
         }
 
+        // Fotogramas sin cabeza propia (el vuelo, por ejemplo): se usa la de reposo
+        for (int i = 0; i < cabezas.Length; i++)
+            if (cabezas[i] != null && Base(cabezas[i].name) == "idle_01") return cabezas[i];
+
         return null;
     }
 

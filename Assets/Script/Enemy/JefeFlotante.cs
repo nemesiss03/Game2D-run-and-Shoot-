@@ -130,6 +130,10 @@ public class JefeFlotante : MonoBehaviour
             // En caída libre el jefe acompaña la caída del jugador para seguir en pantalla
             float destinoY = objetivo.position.y + alturaSobreObjetivo;
             y = Mathf.Lerp(rb.position.y, destinoY, 12f * Time.fixedDeltaTime);
+
+            // Si el jugador sube, el jefe no se sale de la parte alta de la pantalla
+            Camera cam = Camera.main;
+            if (cam != null) y = Mathf.Min(y, cam.transform.position.y + cam.orthographicSize - 1.3f);
         }
         else
         {
@@ -242,7 +246,7 @@ public class JefeFlotante : MonoBehaviour
         SistemaLasers.Activar();
 
         if (HUDJuego.Instancia != null)
-            HUDJuego.Instancia.MostrarAviso("¡LA PLATAFORMA SE DESTRUYE!\nCAÍDA LIBRE", 4f);
+            HUDJuego.Instancia.MostrarAviso("¡LA PLATAFORMA SE DESTRUYE!\nCAÍDA LIBRE · W / S PARA SUBIR Y BAJAR", 4f);
     }
 
     void AlMorir()
@@ -259,7 +263,8 @@ public class JefeFlotante : MonoBehaviour
         CaidaInfinita.DetenerGlobal();
         SistemaLasers.Detener();
 
-        if (HUDJuego.Instancia != null) HUDJuego.Instancia.MostrarVictoria();
+        // El dragón vuela de victoria y la pantalla de victoria aparece mientras tanto
+        CinematicaVictoria.Iniciar();
 
         StartCoroutine(EstallidoFinal());
 
