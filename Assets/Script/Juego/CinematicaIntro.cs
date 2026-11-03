@@ -168,7 +168,7 @@ public class CinematicaIntro : MonoBehaviour
             if (distancia < 11f)
             {
                 j.MirarHacia(false);
-                j.ApuntarCinematica(((Vector2)orbe.transform.position - (Vector2)j.arma.PosicionPunta).normalized);
+                j.ApuntarCinematica(((Vector2)orbe.transform.position - (Vector2)j.PosicionBoca).normalized);
 
                 if (disparos < 5 && Time.time >= proximoDisparo)
                 {

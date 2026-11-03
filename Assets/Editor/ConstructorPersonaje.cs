@@ -9,7 +9,7 @@ using UnityEngine;
 /// 2) Reescribe las animaciones para que muevan el cuerpo.
 /// 3) Monta el rig CabezaPivot → Cabeza → Boca sobre el Player.
 /// 4) Crea el prefab de la bola de fuego.
-/// Menú: Sky Wars / Reconstruir dragón
+/// Menú: Spirit Dragon / Reconstruir dragón
 /// </summary>
 public static class ConstructorPersonaje
 {
@@ -49,7 +49,7 @@ public static class ConstructorPersonaje
     static readonly Vector3 OffsetCabeza = new Vector3(0f, 0.60f, 0f);
     static readonly Vector3 PosicionBoca = new Vector3(0.445f, -0.475f, 0f);
 
-    [MenuItem("Sky Wars/Reconstruir dragón")]
+    [MenuItem("Spirit Dragon/Reconstruir dragón")]
     public static void ConstruirTodo()
     {
         Dictionary<Sprite, Sprite> mapaCuerpo = SepararFotogramas();
@@ -377,7 +377,7 @@ public static class ConstructorPersonaje
             return;
         }
 
-        // La pistola se monta aparte con "Sky Wars/Reconstruir arma"
+        // La pistola se monta aparte con "Spirit Dragon/Reconstruir arma"
         Transform viejo = player.transform.Find("CabezaPivot");
         if (viejo != null) Object.DestroyImmediate(viejo.gameObject);
 

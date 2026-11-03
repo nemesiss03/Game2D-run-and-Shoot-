@@ -129,6 +129,10 @@ MonoBehaviour:
     multiplicadorCima: 0.6
   saltosExtra: 1
   fuerzaSaltoExtra: 0.92
+  rangoVerticalCaida: 3
+  velocidadVerticalCaida: 6.5
+  duracionDashCaida: 0.28
+  factorEnfriamientoCaida: 0.55
   velocidadDash: 22
   duracionDash: 0.18
   enfriamientoDash: 1.1
@@ -140,8 +144,11 @@ MonoBehaviour:
   danio: 12
   velocidadProyectil: 17
   vidaProyectil: 3
+  zonaMuertaApuntado: 1.1
+  margenVolteo: 0.35
+  pausaEntreVolteos: 0.12
   cabeza: {fileID: 6873078888182023445}
-  arma: {fileID: 7050851835512228320}
+  arma: {fileID: 0}
   animador: {fileID: 4099828421315409246}
   spriteCuerpo: {fileID: 2524774744356000763}
   numeroJugador: 1
@@ -297,7 +304,7 @@ MonoBehaviour:
   cuerpo: {fileID: 2524774744356000763}
   cabeza: {fileID: 3520889276907500477}
   boca: {fileID: 5855310621023435826}
-  anguloMaximo: 78
+  anguloMaximo: 58
   velocidadGiro: 720
   cabezas:
   - {fileID: 21300000, guid: 5d587fc2de09b70418e049673f3ecaef, type: 3}
@@ -543,7 +550,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4747938083681708394
 Transform:
   m_ObjectHideFlags: 0

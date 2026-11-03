@@ -8,7 +8,7 @@ using UnityEngine;
 /// Genera por código los sonidos del juego (no hay ningún AudioClip importado en el
 /// proyecto) y los prefabs de efectos. Todo queda en Assets/Resources para poder
 /// cargarse en tiempo de ejecución.
-///   Menú: Sky Wars/Generar audio y efectos
+///   Menú: Spirit Dragon/Generar audio y efectos
 /// </summary>
 public static class GeneradorAudioEfectos
 {
@@ -22,7 +22,7 @@ public static class GeneradorAudioEfectos
     const string RutaBolaFuego = "Assets/Generated_Images/bola_fuego.png";
     const string RutaEsbirro = "Assets/Prefab/Esbirro.prefab";
 
-    [MenuItem("Sky Wars/Generar audio y efectos")]
+    [MenuItem("Spirit Dragon/Generar audio y efectos")]
     public static void Generar()
     {
         CrearCarpetas();

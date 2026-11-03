@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /// <summary>
-/// Menú principal de "Sky Wars": Jugar / Configuración / Salir, con los modos
+/// Menú principal de "Spirit Dragon": Jugar / Configuración / Salir, con los modos
 /// solo PC (1 o 2 jugadores, teclado o mando) y multijugador online (abrir servidor o unirse).
 /// </summary>
 public class MenuPrincipal : MonoBehaviour

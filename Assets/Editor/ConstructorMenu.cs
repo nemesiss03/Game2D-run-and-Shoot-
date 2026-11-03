@@ -9,9 +9,9 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /// <summary>
-/// Construye la escena del menú principal de "Sky Wars" con todos sus paneles
+/// Construye la escena del menú principal de "Spirit Dragon" con todos sus paneles
 /// (Jugar → Solo PC / Multijugador, Configuración y Salir).
-/// Menú: Sky Wars / Construir menú
+/// Menú: Spirit Dragon / Construir menú
 /// </summary>
 public static class ConstructorMenu
 {
@@ -26,7 +26,7 @@ public static class ConstructorMenu
 
     static Font fuente;
 
-    [MenuItem("Sky Wars/Construir menú")]
+    [MenuItem("Spirit Dragon/Construir menú")]
     public static void Construir()
     {
         GenerarSpritesUI();
@@ -98,9 +98,9 @@ public static class ConstructorMenu
         GameObject panelConfig = CrearPanel(canvasGO.transform, "PanelConfig", true);
 
         // ==================== PRINCIPAL ====================
-        RectTransform titulo = CrearTitulo(panelPrincipal.transform, "SKY WARS", 175, new Vector2(0f, 265f));
+        RectTransform titulo = CrearTitulo(panelPrincipal.transform, "SPIRIT DRAGON", 130, new Vector2(0f, 265f));
 
-        Text sub = CrearTexto(panelPrincipal.transform, "Subtitulo", "LA GUERRA DEL CIELO", 44,
+        Text sub = CrearTexto(panelPrincipal.transform, "Subtitulo", "ABYSS HUNTER", 44,
             Crema, new Vector2(0f, 150f), new Vector2(1000f, 60f), TextAnchor.MiddleCenter);
         sub.fontStyle = FontStyle.BoldAndItalic;
 
@@ -108,7 +108,7 @@ public static class ConstructorMenu
         Button bConfig = CrearBoton(panelPrincipal.transform, "BotonConfig", "OPCIONES", new Vector2(0f, -105f), new Vector2(520f, 112f), Crema);
         Button bSalir = CrearBoton(panelPrincipal.transform, "BotonSalir", "SALIR", new Vector2(0f, -230f), new Vector2(520f, 112f), new Color(1f, 0.55f, 0.5f, 1f));
 
-        Text version = CrearTexto(panelPrincipal.transform, "Version", "SKY WARS · v1.0", 26,
+        Text version = CrearTexto(panelPrincipal.transform, "Version", "SPIRIT DRAGON: ABYSS HUNTER · v1.0", 26,
             new Color(1f, 1f, 1f, 0.65f), Vector2.zero, new Vector2(420f, 40f), TextAnchor.MiddleRight);
         Anclar(version.rectTransform, new Vector2(1f, 0f), new Vector2(1f, 0f), new Vector2(-230f, 40f));
 
@@ -240,7 +240,7 @@ public static class ConstructorMenu
 
         RegistrarEnBuildSettings();
 
-        Debug.Log("ConstructorMenu: menú de Sky Wars creado en " + RutaEscena);
+        Debug.Log("ConstructorMenu: menú de Spirit Dragon creado en " + RutaEscena);
     }
 
     // ------------------------------------------------------------ build settings

@@ -16,7 +16,7 @@ public class CabezaDragon : MonoBehaviour
     public Transform boca;
 
     [Header("Movimiento")]
-    public float anguloMaximo = 78f;
+    public float anguloMaximo = 58f;
     public float velocidadGiro = 720f;
 
     [Tooltip("Sprite de cabeza correspondiente a cada sprite de cuerpo (mismo nombre).")]

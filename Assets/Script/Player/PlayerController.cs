@@ -437,7 +437,7 @@ public class PlayerController : MonoBehaviour
         // se contradijeran en cada fotograma (parpadeo de izquierda a derecha).
         Vector3 pivote = arma != null && arma.pivote != null ? arma.pivote.position
             : (cabeza != null && cabeza.pivoteCabeza != null ? cabeza.pivoteCabeza.position : transform.position);
-        Vector3 punta = arma != null ? arma.PosicionPunta : pivote;
+        Vector3 punta = PosicionBoca;
 
         Transform objetivoAuto = JefeFlotante.Activo != null ? JefeFlotante.Activo.transform : null;
         Vector2 desdePivote = Entrada.DireccionAim(pivote, facing, objetivoAuto);
@@ -471,10 +471,9 @@ public class PlayerController : MonoBehaviour
             ultimaDireccionAim = dir;
         }
 
-        // El disparo sale del arma: la cabeza se queda quieta para que el recorte
-        // del cuerpo y de la cabeza siga encajando como en el fotograma original.
+        // La cabeza gira hacia el objetivo y el fuego sale por la boca.
         if (arma != null) arma.Apuntar(dir);
-        if (cabeza != null) cabeza.Relajar();
+        if (cabeza != null) cabeza.Apuntar(dir);
 
         // Si no se mueve, el cuerpo se gira hacia donde apunta (como un tirador).
         // Solo se voltea si el ratón pasa claramente al otro lado y con una pausa mínima entre volteos.
@@ -619,7 +618,18 @@ public class PlayerController : MonoBehaviour
     public void ApuntarCinematica(Vector2 direccion)
     {
         if (arma != null) arma.Apuntar(direccion);
-        if (cabeza != null) cabeza.Relajar();
+        if (cabeza != null) cabeza.Apuntar(direccion);
+    }
+
+    /// <summary>Punto de salida del fuego: la punta del arma si la hay, y si no la boca del dragón.</summary>
+    public Vector3 PosicionBoca
+    {
+        get
+        {
+            if (arma != null && arma.punta != null) return arma.PosicionPunta;
+            if (cabeza != null && cabeza.boca != null) return cabeza.boca.position;
+            return transform.position;
+        }
     }
 
     /// <summary>Celebración al derrotar al jefe: el dragón se eleva batiendo las alas.</summary>

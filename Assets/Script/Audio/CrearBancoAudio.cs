@@ -6,7 +6,7 @@ public static class CrearBancoAudio
     const string Carpeta = "Assets/Resources/Audio";
     const string Ruta = Carpeta + "/BancoAudio.asset";
 
-    [MenuItem("Sky Wars/Crear banco de audio")]
+    [MenuItem("Spirit Dragon/Crear banco de audio")]
     static void Crear()
     {
         BancoAudio existente = AssetDatabase.LoadAssetAtPath<BancoAudio>(Ruta);

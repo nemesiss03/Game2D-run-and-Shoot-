@@ -10,7 +10,7 @@ public enum ModoJuego
 }
 
 /// <summary>
-/// Datos que viajan del menú "Sky Wars" a la arena: cuántos jugadores,
+/// Datos que viajan del menú "Spirit Dragon" a la arena: cuántos jugadores,
 /// con qué dispositivo juega cada uno y si la partida es online.
 /// También guarda los ajustes (volumen / pantalla completa).
 /// </summary>

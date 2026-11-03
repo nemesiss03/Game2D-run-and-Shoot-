@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// Servicio de audio de "Sky Wars". Se crea solo y sobrevive al cambio de escena.
+/// Servicio de audio de "Spirit Dragon". Se crea solo y sobrevive al cambio de escena.
 /// Todo se configura en Assets/Resources/Audio/BancoAudio.asset.
 /// </summary>
 public class AudioJuego : MonoBehaviour
@@ -43,7 +43,7 @@ public class AudioJuego : MonoBehaviour
         banco = Resources.Load<BancoAudio>(BancoAudio.RutaResources);
         if (banco == null)
             Debug.LogWarning("AudioJuego: no encuentro Assets/Resources/Audio/BancoAudio.asset. " +
-                             "Créalo con el menú Sky Wars > Crear banco de audio.");
+                             "Créalo con el menú Spirit Dragon > Crear banco de audio.");
 
         fuentes = new AudioSource[10];
         for (int i = 0; i < fuentes.Length; i++)

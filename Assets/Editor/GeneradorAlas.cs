@@ -6,7 +6,7 @@ using UnityEngine;
 /// <summary>
 /// Crea la animación de vuelo del dragón: 3 fotogramas de aleteo (alas arriba, medio, abajo) generados
 /// a partir del cuerpo en reposo, el clip DragonVolar y el estado "Volar" del Animator.
-/// Menú: Sky Wars / Generar animación de alas.
+/// Menú: Spirit Dragon / Generar animación de alas.
 /// Solo se mueven las alas: gira el ala alrededor del hombro y se agranda un poco para que parezca abierta.
 /// </summary>
 public static class GeneradorAlas
@@ -26,11 +26,21 @@ public static class GeneradorAlas
     static readonly float[] Angulos = { -42f, -8f, 34f };
     static readonly float[] Escalas = { 1.32f, 1.38f, 1.28f };
 
-    [MenuItem("Sky Wars/Generar animación de alas")]
+    [MenuItem("Spirit Dragon/Generar animación de alas")]
     public static void Generar()
     {
         Texture2D origen = AssetDatabase.LoadAssetAtPath<Texture2D>(Origen);
         Color[] px = Leer(origen);
+
+        // Lo que se añadió en el cuello (zona de la cabeza) pertenece al cuerpo, no al ala
+        Color[] cab = Leer(AssetDatabase.LoadAssetAtPath<Texture2D>(Carpeta + "/idle_01_cabeza.png"));
+        bool[] enCabeza = new bool[px.Length];
+        Color[] pxAla = (Color[])px.Clone();
+        for (int i = 0; i < px.Length; i++)
+        {
+            enCabeza[i] = cab[i].a > 0.1f;
+            if (enCabeza[i]) pxAla[i] = Color.clear;
+        }
         int W = origen.width, H = origen.height;
 
         for (int f = 0; f < 3; f++)
@@ -44,7 +54,7 @@ public static class GeneradorAlas
                 {
                     if (y >= CorteY) continue;
                     if (Vector2.Distance(new Vector2(x, y), Hombro) > RadioRaiz) continue;
-                    Color c = px[y * W + x];
+                    Color c = pxAla[y * W + x];
                     if (c.a > 0f) salida[y * W + x] = c;
                 }
             }
@@ -66,7 +76,7 @@ public static class GeneradorAlas
 
                     if (sx >= CorteX || sy >= CorteY || sx < 0f || sy < 0f) continue;   // fuera del ala original
 
-                    Color c = Bilineal(px, W, H, sx, sy, CorteX, CorteY);
+                    Color c = Bilineal(pxAla, W, H, sx, sy, CorteX, CorteY);
                     if (c.a > 0.01f) salida[y * W + x] = Sobre(c, salida[y * W + x]);
                 }
             }
@@ -76,7 +86,7 @@ public static class GeneradorAlas
             {
                 for (int x = 0; x < W; x++)
                 {
-                    bool esAla = x < CorteX && y < CorteY;
+                    bool esAla = x < CorteX && y < CorteY && !enCabeza[y * W + x];
                     if (esAla) continue;
 
                     Color c = px[y * W + x];

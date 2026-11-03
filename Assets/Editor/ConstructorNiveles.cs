@@ -13,7 +13,7 @@ using UnityEngine.Tilemaps;
 /// <summary>
 /// Construye Nivel1 (bosque, terreno casi recto) y Nivel2 (subida por la montaña) con los tiles del
 /// proyecto, y crea los prefabs de cofre, moneda, gema y bandera.
-/// Menú: Sky Wars / Construir niveles.
+/// Menú: Spirit Dragon / Construir niveles.
 /// OJO: reconstruye el terreno y los objetos de los dos niveles desde cero.
 /// </summary>
 public static partial class ConstructorNiveles
@@ -46,7 +46,7 @@ public static partial class ConstructorNiveles
     static List<Vector2> puntosPortal;
 
     // ------------------------------------------------------------------ entrada
-    [MenuItem("Sky Wars/Construir niveles")]
+    [MenuItem("Spirit Dragon/Construir niveles")]
     public static void Construir()
     {
         EditorSceneManager.SaveOpenScenes();
@@ -62,7 +62,7 @@ public static partial class ConstructorNiveles
         LimpiarNivel1();
 
         // Nivel2 ya existe y puede tener retoques a mano: solo se crea de cero si falta.
-        // Para rehacerlo usa "Sky Wars > Reconstruir Nivel 2 (montaña)".
+        // Para rehacerlo usa "Spirit Dragon > Reconstruir Nivel 2 (montaña)".
         bool crearNivel2 = !File.Exists(RutaN2);
         if (crearNivel2) AssetDatabase.CopyAsset(RutaN1, RutaN2);
         AssetDatabase.Refresh();

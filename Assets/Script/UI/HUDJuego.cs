@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /// <summary>
-/// HUD del combate "Sky Wars": vida de los jugadores, vida del jefe,
+/// HUD del combate "Spirit Dragon": vida de los jugadores, vida del jefe,
 /// cargas de fuego con enfriamiento, avisos y pantalla final.
 /// </summary>
 public class HUDJuego : MonoBehaviour

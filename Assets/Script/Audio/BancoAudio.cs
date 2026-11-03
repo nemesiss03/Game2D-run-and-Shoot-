@@ -31,7 +31,7 @@ public class EntradaMusica
     [Range(0f, 1f)] public float volumen = 0.3f;
 }
 
-[CreateAssetMenu(fileName = "BancoAudio", menuName = "Sky Wars/Banco de audio")]
+[CreateAssetMenu(fileName = "BancoAudio", menuName = "Spirit Dragon/Banco de audio")]
 public class BancoAudio : ScriptableObject
 {
     public const string RutaResources = "Audio/BancoAudio";

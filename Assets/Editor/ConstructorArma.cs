@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// Coloca la pistola del dragón en la escena abierta y la conecta al PlayerController.
 /// El disparo sale del cañón (Punta), no de la boca.
-///   Menú: Sky Wars/Reconstruir arma
+///   Menú: Spirit Dragon/Reconstruir arma
 /// </summary>
 public static class ConstructorArma
 {
@@ -23,7 +23,7 @@ public static class ConstructorArma
     // a la derecha y 0.53 por encima del centro del sprite.
     static readonly Vector2 PuntaEnSprite = new Vector2(0.91f, 0.53f);
 
-    [MenuItem("Sky Wars/Reconstruir arma")]
+    [MenuItem("Spirit Dragon/Reconstruir arma")]
     public static void Reconstruir()
     {
         GameObject player = GameObject.Find("Arena/Player");

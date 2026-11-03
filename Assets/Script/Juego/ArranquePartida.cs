@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /// <summary>
-/// Punto de entrada de la arena. Lee lo que se eligió en el menú "Sky Wars"
+/// Punto de entrada de la arena. Lee lo que se eligió en el menú "Spirit Dragon"
 /// y monta la partida: dispositivos de cada jugador, segundo dragón y red.
 /// </summary>
 public class ArranquePartida : MonoBehaviour
