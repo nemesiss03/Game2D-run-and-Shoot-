@@ -30,6 +30,11 @@ public class CinematicaJefe : MonoBehaviour
     public string textoAparicion = "EL CIELO SE OSCURECE…";
     public string textoBatalla = "¡EL DEVORADOR DE CIELOS!\nLA BATALLA COMIENZA";
 
+    [Header("Cámara durante la pelea")]
+    [Tooltip("La cámara se queda quieta en el centro de la arena mientras dura la pelea.")]
+    public bool camaraFija = true;
+    public Vector2 centroCamara = new Vector2(0f, 1.7f);
+
     [Header("Saltar")]
     public bool sePuedeSaltar = true;
 
@@ -175,7 +180,10 @@ public class CinematicaJefe : MonoBehaviour
         if (jugador != null) jugador.controlActivo = true;
 
         if (camara != null)
+        {
             camara.objetivo = objetivoCamaraOriginal != null ? objetivoCamaraOriginal : (jugador != null ? jugador.transform : null);
+            if (camaraFija) camara.FijarEn(new Vector3(centroCamara.x, centroCamara.y, 0f));
+        }
 
         if (foco != null) Destroy(foco.gameObject);
 

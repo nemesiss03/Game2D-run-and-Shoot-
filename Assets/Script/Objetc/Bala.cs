@@ -82,6 +82,9 @@ public class Bala : MonoBehaviour
 
         Salud salud = otro.GetComponentInParent<Salud>();
 
+        // Las zonas, cofres, banderas y demás triggers no son sólidos: la bala los atraviesa
+        if (otro.isTrigger && salud == null) return;
+
         if (cura)
         {
             // El orbe de curación solo le importa el jugador: atraviesa a los enemigos

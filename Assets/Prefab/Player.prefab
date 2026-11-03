@@ -118,7 +118,7 @@ MonoBehaviour:
   fuerzaSalto: 12
   velocidadMaximaCaida: 9
   salto:
-    altura: 2.4
+    altura: 2.6
     tiempoSubida: 0.36
     multiplicadorCaida: 1.8
     multiplicadorCorte: 2.8
@@ -127,9 +127,12 @@ MonoBehaviour:
     tiempoBuffer: 0.1
     umbralCima: 1.5
     multiplicadorCima: 0.6
+  saltosExtra: 1
+  fuerzaSaltoExtra: 0.92
   velocidadDash: 22
   duracionDash: 0.18
   enfriamientoDash: 1.1
+  intervaloEstela: 0.025
   bolaFuegoPrefab: {fileID: 2174199469474054830, guid: abef6c18c04d7fa4d97bf41db1a5ac7b, type: 3}
   cadencia: 0.16
   cargasMaximas: 15
@@ -234,9 +237,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Salud
   equipo: 0
-  vidaMaxima: 160
+  vidaMaxima: 100
   destruirAlMorir: 0
   invulnerable: 0
+  puntosAlMorir: 100
   alMorir:
     m_PersistentCalls:
       m_Calls:
@@ -508,8 +512,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 282131219
+  m_SortingLayer: 3
   m_SortingOrder: 7
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 536a473fa9adb1146982141e54963433, type: 3}
@@ -683,8 +687,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 282131219
+  m_SortingLayer: 3
   m_SortingOrder: 6
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: f53e5e300297519409f636d0b0aef3fa, type: 3}

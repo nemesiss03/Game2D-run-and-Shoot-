@@ -34,6 +34,9 @@ public static class ConstructorNiveles
     const string PrefabEsbirro = "Assets/Prefab/Esbirro.prefab";
     const string PrefabPortal = "Assets/Prefab/Portal.prefab";
     const string PrefabJugador = "Assets/Prefab/Player.prefab";
+    const string PrefabBalaEnemiga = "Assets/Prefab/Triangle.prefab";
+    const string PngVolador = "Assets/Imagen/Enemy/Enemy01_RP1 (32x16).png";
+    const string RutaMaterialSinFriccion = "Assets/Material/SinFriccion.physicsMaterial2D";
 
     const int FondoSuelo = -10;   // fila más baja del terreno
 
@@ -184,7 +187,8 @@ public static class ConstructorNiveles
     }
 
     // ------------------------------------------------------------------ prefabs
-    static GameObject moneda, gema, cofre, bandera;
+    static GameObject moneda, gema, cofre, bandera, voladorDirecto, voladorAzar;
+    static Vector3 escalaVolador = Vector3.one;
 
     static void CrearPrefabs()
     {
@@ -269,6 +273,50 @@ public static class ConstructorNiveles
             b.frames = fBandera;
             return g;
         });
+
+        // --- Voladores que disparan ---
+        // Mismo dibujo que los esbirros, con tinte propio (naranja = apunta directo, morado = dispara al azar)
+        GameObject esbirroBase = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabEsbirro);
+        Sprite[] fVolador = esbirroBase.GetComponent<Esbirro>().frames;
+        escalaVolador = esbirroBase.transform.localScale;
+        GameObject bala = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabBalaEnemiga);
+
+        voladorDirecto = GuardarPrefab("VoladorDirecto", () => CrearVolador("VoladorDirecto", fVolador, bala,
+            EnemigoVoladorDisparador.ModoDisparo.Directo, 1, new Color(1f, 0.78f, 0.45f, 1f)));
+        voladorAzar = GuardarPrefab("VoladorAzar", () => CrearVolador("VoladorAzar", fVolador, bala,
+            EnemigoVoladorDisparador.ModoDisparo.Azar, 2, new Color(0.78f, 0.62f, 1f, 1f)));
+    }
+
+    static GameObject CrearVolador(string nombre, Sprite[] frames, GameObject bala,
+        EnemigoVoladorDisparador.ModoDisparo modo, int proyectiles, Color tinte)
+    {
+        GameObject g = new GameObject(nombre);
+        g.transform.localScale = escalaVolador;
+
+        SpriteRenderer sr = g.AddComponent<SpriteRenderer>();
+        sr.sprite = frames.Length > 0 ? frames[0] : null;
+        sr.color = tinte;
+        sr.sortingLayerName = "Player";
+        sr.sortingOrder = 3;
+
+        Rigidbody2D rb = g.AddComponent<Rigidbody2D>();
+        rb.gravityScale = 0f;
+        rb.freezeRotation = true;
+
+        BoxCollider2D bc = g.AddComponent<BoxCollider2D>();
+        bc.isTrigger = true;
+        bc.size = new Vector2(0.32f, 0.32f);   // como el esbirro (la escala del objeto es 2,2)
+
+        Salud s = g.AddComponent<Salud>();
+        s.equipo = Equipo.Enemigo;
+        s.vidaMaxima = 20f;
+
+        EnemigoVoladorDisparador e = g.AddComponent<EnemigoVoladorDisparador>();
+        e.frames = frames;
+        e.balaPrefab = bala;
+        e.modo = modo;
+        e.proyectilesPorDisparo = proyectiles;
+        return g;
     }
 
     static GameObject GuardarPrefab(string nombre, Func<GameObject> crear)
@@ -284,7 +332,7 @@ public static class ConstructorNiveles
     static readonly string[] BorrarPorNombre =
     {
         "1_0", "2_0", "Grass(Group)", "Enemy03_Idle_RP1 (32x36)_0", "GenerationEnemi", "Abismos", "lasto Pint",
-        "FondoParallax", "Decoracion", "Objetos", "Enemigos", "Portales", "Meta", "ObjetivoCamara", "Arranque"
+        "FondoParallax", "Decoracion", "Objetos", "Enemigos", "Portales", "Meta", "ObjetivoCamara", "Arranque", "Zonas"
     };
 
     static void LimpiarNivel1()
@@ -375,7 +423,11 @@ public static class ConstructorNiveles
         CrearPortales(enemigo, new[] { 20, 45, 60, 80, 100, 125, 140, 162 }, 1.3f, 8f, 13f, 1);
 
         CrearAbismo(-8f, 180f);
-        CrearBandera(172, "Nivel2");
+        GameObject banderaN1 = CrearBandera(172, "Nivel2");
+
+        // Zonas de pelea: una a mitad del nivel y otra que guarda la bandera
+        CrearZona("Zona1", 47f, superficie[47], 2, null);
+        CrearZona("Zona2", 168f, superficie[168], 3, banderaN1);
         FinNivel(new Vector2(-5.08f, -1.62f));
 
         EditorSceneManager.SaveScene(EditorSceneManager.GetActiveScene(), RutaN1);
@@ -444,7 +496,10 @@ public static class ConstructorNiveles
         CrearPortalesPuntos(esbirro, puntosPortal, 7f, 11f, 2);
 
         CrearAbismo(-5f, 31f);
-        CrearBandera(18, "Boss", -3f + 2f * repisas);
+        GameObject banderaN2 = CrearBandera(18, "Boss", -3f + 2f * repisas);
+
+        // Pelea final en la cima: la bandera aparece al despejarla
+        CrearZona("ZonaCima", 18f, -3f + 2f * repisas, 3, banderaN2);
         FinNivel(new Vector2(0f, -1.62f));
 
         EditorSceneManager.SaveScene(EditorSceneManager.GetActiveScene(), RutaN2);
@@ -667,13 +722,63 @@ public static class ConstructorNiveles
         z.AplicarValoresSugeridos();   // 50 de daño
     }
 
-    static void CrearBandera(int x, string siguiente, float yFija = float.NaN)
+    static GameObject CrearBandera(int x, string siguiente, float yFija = float.NaN)
     {
         Transform meta = Padre("Meta");
         GameObject g = Poner(bandera, x + 0.5f, meta, 0f, yFija);
-        if (g == null) return;
+        if (g == null) return null;
 
         g.GetComponent<Bandera>().escenaSiguiente = siguiente;
+        return g;
+    }
+
+    /// <summary>
+    /// Zona de pelea de 16 x 10 (lo que muestra la cámara): paredes, cámara quieta y oleadas de voladores.
+    /// La cámara queda centrada 3,7 sobre la superficie.
+    /// </summary>
+    static void CrearZona(string nombre, float centroX, float superficieY, int oleadas, GameObject activarAlTerminar)
+    {
+        Transform padre = Padre("Zonas");
+
+        GameObject g = new GameObject(nombre);
+        g.transform.SetParent(padre, false);
+        float centroY = superficieY + 3.7f;
+        g.transform.position = new Vector3(centroX, centroY, 0f);
+
+        ZonaCombate zona = g.AddComponent<ZonaCombate>();   // añade también el BoxCollider2D y el GeneradorEnemigos
+        BoxCollider2D area = g.GetComponent<BoxCollider2D>();
+        area.size = new Vector2(16f, 10f);
+
+        zona.materialPared = AssetDatabase.LoadAssetAtPath<PhysicsMaterial2D>(RutaMaterialSinFriccion);
+        zona.recompensaPrefab = cofre;
+        zona.posicionRecompensa = new Vector2(centroX - 3f, superficieY);
+        if (activarAlTerminar != null) zona.activarAlTerminar = new[] { activarAlTerminar };
+
+        // Puntos por donde entran los enemigos: la franja alta de la pantalla
+        GeneradorEnemigos gen = g.GetComponent<GeneradorEnemigos>();
+        List<Transform> puntos = new List<Transform>();
+        float[] xs = { -6.5f, -3.5f, 0f, 3.5f, 6.5f };
+        for (int i = 0; i < xs.Length; i++)
+        {
+            GameObject a = new GameObject("Entrada" + i);
+            a.transform.SetParent(g.transform, false);
+            a.transform.localPosition = new Vector3(xs[i], 3.3f - (i % 2) * 1.2f, 0f);
+            puntos.Add(a.transform);
+        }
+
+        gen.puntosAparicion = puntos.ToArray();
+        gen.maxVivos = 4;
+
+        GameObject esbirro = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabEsbirro);
+
+        List<GeneradorEnemigos.Oleada> lista = new List<GeneradorEnemigos.Oleada>();
+        lista.Add(new GeneradorEnemigos.Oleada { nombre = "Oleada 1", enemigos = new[] { voladorDirecto }, cantidad = 3, intervalo = 1.4f, pausaAlTerminar = 1.5f });
+        if (oleadas >= 2)
+            lista.Add(new GeneradorEnemigos.Oleada { nombre = "Oleada 2", enemigos = new[] { voladorDirecto, voladorAzar }, cantidad = 4, intervalo = 1.3f, pausaAlTerminar = 1.5f });
+        if (oleadas >= 3)
+            lista.Add(new GeneradorEnemigos.Oleada { nombre = "Oleada 3", enemigos = new[] { voladorAzar, voladorDirecto, esbirro }, cantidad = 6, intervalo = 1.1f, pausaAlTerminar = 1.5f });
+
+        gen.oleadas = lista.ToArray();
     }
 
     /// <summary>Jugador, cámara y arranque de partida (2 jugadores) al final de cada nivel.</summary>

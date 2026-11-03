@@ -238,6 +238,9 @@ public class JefeFlotante : MonoBehaviour
         cadenciaDisparo = Mathf.Max(0.85f, cadenciaDisparo * 0.7f);
         cadenciaPortales = Mathf.Max(4.5f, cadenciaPortales * 0.7f);
 
+        // Además, 5 láseres que apuntan al jugador desde los bordes de la pantalla
+        SistemaLasers.Activar();
+
         if (HUDJuego.Instancia != null)
             HUDJuego.Instancia.MostrarAviso("¡LA PLATAFORMA SE DESTRUYE!\nCAÍDA LIBRE", 4f);
     }
@@ -252,8 +255,9 @@ public class JefeFlotante : MonoBehaviour
         if (animador != null) animador.SetTrigger(hashMorir);
         if (rb != null) rb.linearVelocity = Vector2.zero;
 
-        // La caída infinita termina al ganar
+        // La caída infinita y los láseres terminan al ganar
         CaidaInfinita.DetenerGlobal();
+        SistemaLasers.Detener();
 
         if (HUDJuego.Instancia != null) HUDJuego.Instancia.MostrarVictoria();
 

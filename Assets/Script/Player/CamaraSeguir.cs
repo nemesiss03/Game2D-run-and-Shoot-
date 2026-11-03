@@ -17,9 +17,32 @@ public class CamaraSeguir : MonoBehaviour
     public float velocidadTemblor = 34f;
 
     PlayerController jugador;
+    bool fija;
+    Vector3 centroFijo;
+
+    /// <summary>La cámara deja de seguir al jugador y se queda quieta en este punto (sin temblor).</summary>
+    public void FijarEn(Vector3 centro)
+    {
+        fija = true;
+        centroFijo = centro;
+    }
+
+    public void Liberar()
+    {
+        fija = false;
+    }
 
     void LateUpdate()
     {
+        if (fija)
+        {
+            float kf = 1f - Mathf.Exp(-suavizado * Time.deltaTime);
+            Vector3 p = Vector3.Lerp(transform.position, centroFijo, kf);
+            p.z = desplazamiento.z;
+            transform.position = p;
+            return;
+        }
+
         if (objetivo == null && objetivo2 == null) return;
 
         Vector3 centro;

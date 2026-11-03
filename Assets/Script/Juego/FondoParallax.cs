@@ -67,7 +67,8 @@ public class FondoParallax : MonoBehaviour
 
     void LateUpdate()
     {
-        if (listo) Colocar();
+        // Si Unity recarga los scripts durante el juego se pierden las copias: se evita el error
+        if (listo && copias != null) Colocar();
     }
 
     void Colocar()
