@@ -92,6 +92,7 @@ public static partial class ConstructorNiveles
         ReyCerdo rc = rey.GetComponent<ReyCerdo>();
         rc.limiteIzq = 4f;
         rc.limiteDer = 40f;
+        rc.materialPared = AssetDatabase.LoadAssetAtPath<PhysicsMaterial2D>(RutaMaterialSinFriccion);
         rc.soldadoPrefab = soldadoPrefab;
         rc.bombarderoPrefab = bombarderoPrefab;
         rc.recompensaPrefab = cofre;

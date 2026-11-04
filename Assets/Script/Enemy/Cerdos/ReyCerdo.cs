@@ -20,6 +20,8 @@ public class ReyCerdo : MonoBehaviour
     [Header("Arena (x del suelo donde se pelea)")]
     public float limiteIzq = 4f;
     public float limiteDer = 40f;
+    [Tooltip("Material sin fricción de las paredes (para que no se agarre al saltar).")]
+    public PhysicsMaterial2D materialPared;
 
     [Header("Movimiento y mazo")]
     public float velocidad = 3.6f;
@@ -104,10 +106,7 @@ public class ReyCerdo : MonoBehaviour
     void CrearParedes()
     {
         paredes = new GameObject("ParedesArena");
-        PhysicsMaterial2D mat = null;
-#if UNITY_EDITOR
-        mat = UnityEditor.AssetDatabase.LoadAssetAtPath<PhysicsMaterial2D>("Assets/Material/SinFriccion.physicsMaterial2D");
-#endif
+        PhysicsMaterial2D mat = materialPared;
         foreach (float x in new[] { limiteIzq - 0.5f, limiteDer + 0.5f })
         {
             GameObject g = new GameObject("Pared");
