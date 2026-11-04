@@ -55,6 +55,8 @@ public class HUDJuego : MonoBehaviour
         if (textoAviso != null) textoAviso.text = string.Empty;
         if (textoEstadoArma != null) textoEstadoArma.text = string.Empty;
         if (grupoJugador2 != null) grupoJugador2.SetActive(jugador2 != null);
+
+        BarraFuego.Crear(this);
     }
 
     void OnDestroy()

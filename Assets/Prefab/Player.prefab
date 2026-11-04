@@ -139,7 +139,7 @@ MonoBehaviour:
   intervaloEstela: 0.025
   bolaFuegoPrefab: {fileID: 2174199469474054830, guid: abef6c18c04d7fa4d97bf41db1a5ac7b, type: 3}
   cadencia: 0.16
-  cargasMaximas: 15
+  cargasMaximas: 20
   tiempoEnfriamiento: 2.5
   danio: 12
   velocidadProyectil: 17

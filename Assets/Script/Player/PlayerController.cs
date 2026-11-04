@@ -44,13 +44,23 @@ public class PlayerController : MonoBehaviour
     [Header("Aliento de fuego")]
     public GameObject bolaFuegoPrefab;
     public float cadencia = 0.22f;
-    [Tooltip("Bolas de fuego que se pueden lanzar antes de tener que enfriarse.")]
-    public int cargasMaximas = 15;
-    [Tooltip("Segundos de descanso (enfriamiento) para recuperar las 15 cargas.")]
+    [Tooltip("Bolas de fuego que se pueden lanzar antes de tener que enfriarse. La barra del HUD se adapta sola.")]
+    public int cargasMaximas = 20;
+    [Tooltip("Segundos de descanso (enfriamiento) para recuperar todas las cargas.")]
     public float tiempoEnfriamiento = 2.5f;
     public float danio = 12f;
     public float velocidadProyectil = 17f;
     public float vidaProyectil = 3f;
+
+    [Header("Indicador de fuego (orbe del pecho)")]
+    [Tooltip("Muestra el orbe del pecho: se enciende en rojo cuando queda poco fuego o se está enfriando.")]
+    public bool mostrarOrbePecho = true;
+    [Tooltip("Dónde está el orbe respecto al dragón (x se invierte solo al mirar a la izquierda).")]
+    public Vector2 posicionPecho = new Vector2(0f, -0.68f);
+    [Range(0.1f, 1.5f)] public float tamanoOrbe = 0.42f;
+    [Tooltip("Fracción de cargas por debajo de la cual el orbe empieza a encenderse (0,25 = con el 25 % o menos).")]
+    [Range(0f, 1f)] public float umbralAvisoFuego = 0.25f;
+    public Color colorOrbe = new Color(1f, 0.15f, 0.1f, 1f);
 
     [Header("Apuntado con el ratón")]
     [Tooltip("Si el ratón está más cerca que esto del arma, el dragón no cambia de lado ni de ángulo.")]
@@ -86,6 +96,9 @@ public class PlayerController : MonoBehaviour
     // --- Lectura para el HUD ---
     public int Balas { get { return cargas; } }
     public int CapacidadCargador { get { return cargasMaximas; } }
+    /// <summary>Cargas restantes de 0 a 1.</summary>
+    public float FraccionCargas { get { return cargasMaximas <= 0 ? 0f : Mathf.Clamp01(cargas / (float)cargasMaximas); } }
+    public bool MirandoIzquierda { get { return mirandoIzquierda; } }
     public bool Recargando { get { return enfriando; } }
     public bool Muerto { get { return muerto; } }
     public float ProgresoRecarga
@@ -163,6 +176,8 @@ public class PlayerController : MonoBehaviour
         rb.freezeRotation = true;
 
         cargas = cargasMaximas;
+
+        if (mostrarOrbePecho) OrbePechoFuego.Crear(this);
     }
 
     void OnEnable() { Jugadores.Registrar(this); }
