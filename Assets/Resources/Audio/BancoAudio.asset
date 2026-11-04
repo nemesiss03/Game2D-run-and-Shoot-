@@ -17,10 +17,16 @@ MonoBehaviour:
     musica: {fileID: 8300000, guid: 79fbee92cb0d19e45b83a5b4eab9a591, type: 3}
     volumen: 0.3
   - escena: Nivel1
-    musica: {fileID: 8300000, guid: 79fbee92cb0d19e45b83a5b4eab9a591, type: 3}
+    musica: {fileID: 8300000, guid: b14dce5fea97bc34897e163bb1dea30d, type: 3}
     volumen: 0.3
-  musicaBatalla: {fileID: 8300000, guid: 79e81dffac8c3584fb887257fb568d5f, type: 3}
-  volumenBatalla: 0.45
+  - escena: Nivel2
+    musica: {fileID: 8300000, guid: 565aa52793ef3e544b5a946e6cf487c1, type: 3}
+    volumen: 0.28
+  - escena: Nivel3
+    musica: {fileID: 8300000, guid: 6011a0196dcdf704b90475095c986b28, type: 3}
+    volumen: 0.17
+  musicaBatalla: {fileID: 8300000, guid: d85ef7e256d6e1b4489ad8c3dc8509e7, type: 3}
+  volumenBatalla: 0.4
   efectos:
   - sonido: 0
     clips:

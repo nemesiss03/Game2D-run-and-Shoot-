@@ -51,6 +51,57 @@ public static class CrearBancoAudio
         Debug.Log("Banco de audio creado en " + Ruta);
     }
 
+    /// <summary>
+    /// Asigna la música generada con Tools/GenerarMusica.py: Nivel1, Nivel2 y Nivel3 por escena y la del jefe
+    /// como música de batalla (suena al acabar la cinemática del jefe). Los volúmenes igualan la sonoridad.
+    /// </summary>
+    [MenuItem("Spirit Dragon/Asignar música de los niveles")]
+    static void AsignarMusicaNiveles()
+    {
+        BancoAudio banco = AssetDatabase.LoadAssetAtPath<BancoAudio>(Ruta);
+        if (banco == null) { Debug.LogError("No existe el banco de audio: usa antes 'Crear banco de audio'."); return; }
+
+        string[] archivos = { "musica_nivel1.wav", "musica_nivel2.wav", "musica_nivel3.wav", "musica_boss.wav" };
+        foreach (string a in archivos)
+        {
+            string ruta = Carpeta + "/Musica/" + a;
+            AudioImporter imp = AssetImporter.GetAtPath(ruta) as AudioImporter;
+            if (imp == null) { Debug.LogError("Falta " + ruta); return; }
+
+            AudioImporterSampleSettings s = imp.defaultSampleSettings;
+            s.loadType = AudioClipLoadType.Streaming;
+            s.compressionFormat = AudioCompressionFormat.Vorbis;
+            s.quality = 0.7f;
+            imp.defaultSampleSettings = s;
+            imp.forceToMono = true;
+            imp.SaveAndReimport();
+        }
+
+        Escena(banco, "Nivel1", "musica_nivel1.wav", 0.30f);
+        Escena(banco, "Nivel2", "musica_nivel2.wav", 0.28f);
+        Escena(banco, "Nivel3", "musica_nivel3.wav", 0.17f);
+
+        banco.musicaBatalla = AssetDatabase.LoadAssetAtPath<AudioClip>(Carpeta + "/Musica/musica_boss.wav");
+        banco.volumenBatalla = 0.40f;
+
+        EditorUtility.SetDirty(banco);
+        AssetDatabase.SaveAssets();
+        Debug.Log("Música asignada: Nivel1, Nivel2, Nivel3 y batalla del jefe.");
+    }
+
+    static void Escena(BancoAudio banco, string escena, string archivo, float volumen)
+    {
+        AudioClip clip = AssetDatabase.LoadAssetAtPath<AudioClip>(Carpeta + "/Musica/" + archivo);
+        EntradaMusica e = banco.BuscarMusica(escena);
+        if (e == null)
+        {
+            e = new EntradaMusica { escena = escena };
+            banco.musicaPorEscena.Add(e);
+        }
+        e.musica = clip;
+        e.volumen = volumen;
+    }
+
     static AudioClip Clip(string archivo)
     {
         return AssetDatabase.LoadAssetAtPath<AudioClip>(Carpeta + "/" + archivo);
