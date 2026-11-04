@@ -56,8 +56,9 @@ public class CamaraSeguir : MonoBehaviour
 
         if (EnCaida())
         {
-            destino.y += Mathf.Sin(Time.time * velocidadTemblor) * temblorCaida;
-            destino.x += Mathf.Sin(Time.time * velocidadTemblor * 0.7f) * temblorCaida * 0.4f;
+            float fuerza = temblorCaida * PresionCaida.Intensidad;
+            destino.y += Mathf.Sin(Time.time * velocidadTemblor) * fuerza;
+            destino.x += Mathf.Sin(Time.time * velocidadTemblor * 0.7f) * fuerza * 0.6f;
         }
 
         float k = 1f - Mathf.Exp(-suavizado * Time.deltaTime);

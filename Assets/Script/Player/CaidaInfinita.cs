@@ -77,6 +77,7 @@ public class CaidaInfinita : MonoBehaviour
 
         CrearNubes();
         activa = true;
+        PresionCaida.Crear(gameObject);
     }
 
     public void Detener()

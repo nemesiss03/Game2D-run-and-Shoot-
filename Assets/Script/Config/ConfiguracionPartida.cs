@@ -19,7 +19,7 @@ public static class ConfiguracionPartida
     public const int PuertoPorDefecto = 7777;
 
     public const string EscenaMenu = "MenuPrincipal";
-    public const string EscenaArena = "Nivel1";   // primera escena de la partida: Nivel1 > Nivel2 > Boss
+    public const string EscenaArena = "Nivel1";   // primera escena de la partida: Nivel1 > Nivel2 (Rey Cerdo) > Nivel3 (montaña) > Boss
 
     public static ModoJuego Modo = ModoJuego.UnJugador;
     public static TipoDispositivo Dispositivo1 = TipoDispositivo.TecladoRaton;

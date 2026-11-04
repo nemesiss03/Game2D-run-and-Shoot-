@@ -61,17 +61,12 @@ public static partial class ConstructorNiveles
 
         LimpiarNivel1();
 
-        // Nivel2 ya existe y puede tener retoques a mano: solo se crea de cero si falta.
-        // Para rehacerlo usa "Spirit Dragon > Reconstruir Nivel 2 (montaña)".
-        bool crearNivel2 = !File.Exists(RutaN2);
-        if (crearNivel2) AssetDatabase.CopyAsset(RutaN1, RutaN2);
-        AssetDatabase.Refresh();
-
+        // Solo se rehace el Nivel 1. Nivel 2 (Rey Cerdo): "Construir Nivel 2 (Rey Cerdo)".
+        // Nivel 3 (montaña): "Reconstruir Nivel 3 (montaña)".
         ConstruirNivel1();
-        if (crearNivel2) ConstruirNivel2();
         RegistrarEnBuildSettings();
 
-        Debug.Log("ConstructorNiveles: Nivel1 y Nivel2 construidos.");
+        Debug.Log("ConstructorNiveles: Nivel1 construido.");
     }
 
     // ------------------------------------------------------------------ tiles
@@ -445,78 +440,6 @@ public static partial class ConstructorNiveles
         EditorSceneManager.SaveScene(EditorSceneManager.GetActiveScene(), RutaN1);
     }
 
-    // ------------------------------------------------------------------ nivel 2: montaña
-    static void ConstruirNivel2()
-    {
-        EditorSceneManager.OpenScene(RutaN2, OpenSceneMode.Single);
-        Iniciar();
-
-        Tilemap suelo = GameObject.Find("Ground").GetComponent<Tilemap>();
-
-        Dictionary<int, int> altura = new Dictionary<int, int>();
-        Tramo(altura, -5, 31, -4);          // suelo del valle
-        Tramo(altura, -10, -5, 52);         // pared izquierda de la montaña
-        Tramo(altura, 31, 36, 52);          // pared derecha
-
-        PintarSuelo(suelo, altura);
-
-        // Zigzag de repisas: cada una 2 casillas más alta que la anterior, alternando izquierda y derecha.
-        // La repisa j tiene su superficie en y = -3 + 2j (la 0 es el suelo del valle).
-        // Entre izquierda y derecha hay 3 casillas de hueco: se cruzan con salto doble.
-        // En las transiciones impares hay una piedra de paso en medio para descansar.
-        const int repisas = 13;
-        puntosPortal.Clear();
-
-        for (int j = 1; j <= repisas; j++)
-        {
-            int superficieJ = -3 + 2 * j;
-            int fila = superficieJ - 1;
-            bool izquierda = j % 2 == 0;
-
-            if (j < repisas)
-            {
-                if (izquierda) PintarPlataforma(suelo, -5, 9, fila);
-                else PintarPlataforma(suelo, 12, 31, fila);
-
-                if (j % 2 == 1 && j >= 3) PintarPlataforma(suelo, 10, 12, superficieJ, 1);   // piedra de paso, 1 casilla sobre la repisa
-
-                puntosPortal.Add(new Vector2(izquierda ? 2f : 22f, superficieJ + 2.3f));
-            }
-            else
-            {
-                PintarPlataforma(suelo, 8, 28, fila);    // cima
-            }
-        }
-
-        ReconstruirColision(suelo);
-
-        CrearParallax(0.96f);
-        Decorar(false, 2);
-
-        // Cofres en las repisas de arriba (la izquierda y la derecha se van alternando)
-        Transform objetos = Padre("Objetos");
-        for (int j = 2; j < repisas; j += 2)
-        {
-            float x = (j % 2 == 0) ? 3.5f : 24.5f;
-            Poner(cofre, x, objetos, 0f, -3f + 2f * j);
-        }
-        Poner(cofre, 24.5f, objetos, 0f, -3f + 2f * 7);
-        Poner(cofre, 11f, objetos, 0f, -3f + 2f * 9 + 1f);   // sobre la piedra de paso de la repisa 9
-
-        // Enemigos voladores desde portales (cerca de las repisas)
-        GameObject esbirro = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabEsbirro);
-        CrearPortalesPuntos(esbirro, puntosPortal, 7f, 11f, 2);
-
-        CrearAbismo(-5f, 31f);
-        GameObject banderaN2 = CrearBandera(18, "Boss", -3f + 2f * repisas);
-
-        // Pelea final en la cima: la bandera aparece al despejarla
-        CrearZona("ZonaCima", 18f, -3f + 2f * repisas, 3, banderaN2);
-        FinNivel(new Vector2(0f, -1.62f));
-
-        EditorSceneManager.SaveScene(EditorSceneManager.GetActiveScene(), RutaN2);
-    }
-
     // ------------------------------------------------------------------ terreno
     static void Iniciar()
     {
@@ -858,7 +781,7 @@ public static partial class ConstructorNiveles
     // ------------------------------------------------------------------ build settings
     static void RegistrarEnBuildSettings()
     {
-        string[] orden = { RutaMenu, RutaN1, RutaN2, RutaBoss };
+        string[] orden = { RutaMenu, RutaN1, RutaN2, RutaN3, RutaBoss };
 
         List<EditorBuildSettingsScene> lista = new List<EditorBuildSettingsScene>();
         foreach (string ruta in orden)

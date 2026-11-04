@@ -10,9 +10,9 @@ using UnityEngine.Tilemaps;
 #pragma warning disable CS0618
 
 /// <summary>
-/// Nivel 2 como una montaña que se sube hacia arriba y a la derecha, con roca nevada
+/// Nivel 3 como una montaña que se sube hacia arriba y a la derecha, con roca nevada
 /// (tileset rock_ice_alt_tileset_3) y un fondo de montañas generado por código.
-/// Menú: Spirit Dragon / Reconstruir Nivel 2 (montaña). Rehace solo el terreno y los objetos
+/// Menú: Spirit Dragon / Reconstruir Nivel 3 (montaña). Rehace solo el terreno y los objetos
 /// generados; lo que hayas añadido a mano en la escena (por ejemplo tus pinchos) se conserva.
 /// </summary>
 public static partial class ConstructorNiveles
@@ -24,7 +24,7 @@ public static partial class ConstructorNiveles
     static Tile[] rocaNieve, rocaRelleno, rocaFina;
 
     // ------------------------------------------------------------------ entrada
-    [MenuItem("Spirit Dragon/Reconstruir Nivel 2 (montaña)")]
+    [MenuItem("Spirit Dragon/Reconstruir Nivel 3 (montaña)")]
     public static void ReconstruirNivel2Montana()
     {
         EditorSceneManager.SaveOpenScenes();
@@ -33,7 +33,7 @@ public static partial class ConstructorNiveles
         GenerarFondoMontana();
         CargarPrefabsDeNivel();
 
-        EditorSceneManager.OpenScene(RutaN2, OpenSceneMode.Single);
+        EditorSceneManager.OpenScene(RutaN3, OpenSceneMode.Single);
         BorrarGeneradosNivel2();
         Iniciar();
 
@@ -110,8 +110,8 @@ public static partial class ConstructorNiveles
 
         FinNivel(new Vector2(0f, -1.62f));
 
-        EditorSceneManager.SaveScene(EditorSceneManager.GetActiveScene(), RutaN2);
-        Debug.Log("ConstructorNiveles: Nivel 2 (montaña) reconstruido.");
+        EditorSceneManager.SaveScene(EditorSceneManager.GetActiveScene(), RutaN3);
+        Debug.Log("ConstructorNiveles: Nivel 3 (montaña) reconstruido.");
     }
 
     static void CargarPrefabsDeNivel()

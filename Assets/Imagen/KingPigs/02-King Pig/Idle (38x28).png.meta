@@ -1,0 +1,492 @@
+fileFormatVersion: 2
+guid: 7c7d80e191a07da44ba97cd0344d653b
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4528382388787556690
+    second: Idle (38x28)_0
+  - first:
+      213: 8412296399577003747
+    second: Idle (38x28)_1
+  - first:
+      213: -109952482578449033
+    second: Idle (38x28)_2
+  - first:
+      213: -209679512346147777
+    second: Idle (38x28)_3
+  - first:
+      213: -2607453568630673242
+    second: Idle (38x28)_4
+  - first:
+      213: -2533730466094568701
+    second: Idle (38x28)_5
+  - first:
+      213: -1521685734421727823
+    second: Idle (38x28)_6
+  - first:
+      213: -6045718703917629974
+    second: Idle (38x28)_7
+  - first:
+      213: -1104561379124751342
+    second: Idle (38x28)_8
+  - first:
+      213: 7231966715156713990
+    second: Idle (38x28)_9
+  - first:
+      213: -7253561670630318893
+    second: Idle (38x28)_10
+  - first:
+      213: -8781086628845775685
+    second: Idle (38x28)_11
+  - first:
+      213: -8378321682608494810
+    second: Rey_Idle_00
+  - first:
+      213: 8063766051141145835
+    second: Rey_Idle_01
+  - first:
+      213: -3591745998505172163
+    second: Rey_Idle_02
+  - first:
+      213: -3002809295390924904
+    second: Rey_Idle_03
+  - first:
+      213: 5213726992312344269
+    second: Rey_Idle_04
+  - first:
+      213: 4890755444566429862
+    second: Rey_Idle_05
+  - first:
+      213: 3658885335989474668
+    second: Rey_Idle_06
+  - first:
+      213: 6267486962059689371
+    second: Rey_Idle_07
+  - first:
+      213: 8894320979342084377
+    second: Rey_Idle_08
+  - first:
+      213: 3175453639488037925
+    second: Rey_Idle_09
+  - first:
+      213: 4591497729992373403
+    second: Rey_Idle_10
+  - first:
+      213: -4155518353965611488
+    second: Rey_Idle_11
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 10
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Rey_Idle_00
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 38
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 627ea26e1d83abb80800000000000000
+      internalID: -8378321682608494810
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rey_Idle_01
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 0
+        width: 38
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be45f16ff7048ef60800000000000000
+      internalID: 8063766051141145835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rey_Idle_02
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 0
+        width: 38
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d332ba35b0e872ec0800000000000000
+      internalID: -3591745998505172163
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rey_Idle_03
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 0
+        width: 38
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 89f9bfbfad0e356d0800000000000000
+      internalID: -3002809295390924904
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rey_Idle_04
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 0
+        width: 38
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dce94a47311ea5840800000000000000
+      internalID: 5213726992312344269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rey_Idle_05
+      rect:
+        serializedVersion: 2
+        x: 190
+        y: 0
+        width: 38
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a090bc1a247fd340800000000000000
+      internalID: 4890755444566429862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rey_Idle_06
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 0
+        width: 38
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c65d985d3d8f6c230800000000000000
+      internalID: 3658885335989474668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rey_Idle_07
+      rect:
+        serializedVersion: 2
+        x: 266
+        y: 0
+        width: 38
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9db5f77f269af650800000000000000
+      internalID: 6267486962059689371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rey_Idle_08
+      rect:
+        serializedVersion: 2
+        x: 304
+        y: 0
+        width: 38
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9194dfb7ec9fe6b70800000000000000
+      internalID: 8894320979342084377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rey_Idle_09
+      rect:
+        serializedVersion: 2
+        x: 342
+        y: 0
+        width: 38
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 524e766c24a711c20800000000000000
+      internalID: 3175453639488037925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rey_Idle_10
+      rect:
+        serializedVersion: 2
+        x: 380
+        y: 0
+        width: 38
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b94353fcbd648bf30800000000000000
+      internalID: 4591497729992373403
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Rey_Idle_11
+      rect:
+        serializedVersion: 2
+        x: 418
+        y: 0
+        width: 38
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 026834ee212a456c0800000000000000
+      internalID: -4155518353965611488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Idle (38x28)_0: 4528382388787556690
+      Idle (38x28)_1: 8412296399577003747
+      Idle (38x28)_10: -7253561670630318893
+      Idle (38x28)_11: -8781086628845775685
+      Idle (38x28)_2: -109952482578449033
+      Idle (38x28)_3: -209679512346147777
+      Idle (38x28)_4: -2607453568630673242
+      Idle (38x28)_5: -2533730466094568701
+      Idle (38x28)_6: -1521685734421727823
+      Idle (38x28)_7: -6045718703917629974
+      Idle (38x28)_8: -1104561379124751342
+      Idle (38x28)_9: 7231966715156713990
+      Rey_Idle_00: -8378321682608494810
+      Rey_Idle_01: 8063766051141145835
+      Rey_Idle_02: -3591745998505172163
+      Rey_Idle_03: -3002809295390924904
+      Rey_Idle_04: 5213726992312344269
+      Rey_Idle_05: 4890755444566429862
+      Rey_Idle_06: 3658885335989474668
+      Rey_Idle_07: 6267486962059689371
+      Rey_Idle_08: 8894320979342084377
+      Rey_Idle_09: 3175453639488037925
+      Rey_Idle_10: 4591497729992373403
+      Rey_Idle_11: -4155518353965611488
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,462 @@
+fileFormatVersion: 2
+guid: 595a57cc883bd884f94eaa6eb796c95a
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4571226829092849726
+    second: Idle (34x28)_0
+  - first:
+      213: -8949856686944730191
+    second: Idle (34x28)_1
+  - first:
+      213: 2826186669421539911
+    second: Idle (34x28)_2
+  - first:
+      213: -5531042245258228581
+    second: Idle (34x28)_3
+  - first:
+      213: 2622321733923217370
+    second: Idle (34x28)_4
+  - first:
+      213: 4508922478542092599
+    second: Idle (34x28)_5
+  - first:
+      213: 850222469992291503
+    second: Idle (34x28)_6
+  - first:
+      213: -7622230470964513380
+    second: Idle (34x28)_7
+  - first:
+      213: -4453737675818896170
+    second: Idle (34x28)_8
+  - first:
+      213: -6983562990028683331
+    second: Idle (34x28)_9
+  - first:
+      213: -1903310279220368910
+    second: Idle (34x28)_10
+  - first:
+      213: 7037062918059412608
+    second: Cerdo_Idle_00
+  - first:
+      213: -6753336977595444554
+    second: Cerdo_Idle_01
+  - first:
+      213: -6910195808625991659
+    second: Cerdo_Idle_02
+  - first:
+      213: 2767466729186233598
+    second: Cerdo_Idle_03
+  - first:
+      213: 4466824291596329550
+    second: Cerdo_Idle_04
+  - first:
+      213: 4153447394478277352
+    second: Cerdo_Idle_05
+  - first:
+      213: -1145076314507784429
+    second: Cerdo_Idle_06
+  - first:
+      213: -6185896275373488876
+    second: Cerdo_Idle_07
+  - first:
+      213: 2830114151089186044
+    second: Cerdo_Idle_08
+  - first:
+      213: 7939729324664155504
+    second: Cerdo_Idle_09
+  - first:
+      213: -6527615681705777094
+    second: Cerdo_Idle_10
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Cerdo_Idle_00
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 34
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08c4105a07ba8a160800000000000000
+      internalID: 7037062918059412608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cerdo_Idle_01
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 0
+        width: 34
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b2d9e1bcc35742a0800000000000000
+      internalID: -6753336977595444554
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cerdo_Idle_02
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 0
+        width: 34
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 510647a168d0a10a0800000000000000
+      internalID: -6910195808625991659
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cerdo_Idle_03
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 0
+        width: 34
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: efc8bd8d354086620800000000000000
+      internalID: 2767466729186233598
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cerdo_Idle_04
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 0
+        width: 34
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e426fa6e6095dfd30800000000000000
+      internalID: 4466824291596329550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cerdo_Idle_05
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 0
+        width: 34
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e2462d366204a930800000000000000
+      internalID: 4153447394478277352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cerdo_Idle_06
+      rect:
+        serializedVersion: 2
+        x: 204
+        y: 0
+        width: 34
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 31fcc09a82fdb10f0800000000000000
+      internalID: -1145076314507784429
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cerdo_Idle_07
+      rect:
+        serializedVersion: 2
+        x: 238
+        y: 0
+        width: 34
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41583f0ac18472aa0800000000000000
+      internalID: -6185896275373488876
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cerdo_Idle_08
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 0
+        width: 34
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf42a7963d5964720800000000000000
+      internalID: 2830114151089186044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cerdo_Idle_09
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 0
+        width: 34
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07deb5911c59f2e60800000000000000
+      internalID: 7939729324664155504
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Cerdo_Idle_10
+      rect:
+        serializedVersion: 2
+        x: 340
+        y: 0
+        width: 34
+        height: 28
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a3868ad4f104965a0800000000000000
+      internalID: -6527615681705777094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Cerdo_Idle_00: 7037062918059412608
+      Cerdo_Idle_01: -6753336977595444554
+      Cerdo_Idle_02: -6910195808625991659
+      Cerdo_Idle_03: 2767466729186233598
+      Cerdo_Idle_04: 4466824291596329550
+      Cerdo_Idle_05: 4153447394478277352
+      Cerdo_Idle_06: -1145076314507784429
+      Cerdo_Idle_07: -6185896275373488876
+      Cerdo_Idle_08: 2830114151089186044
+      Cerdo_Idle_09: 7939729324664155504
+      Cerdo_Idle_10: -6527615681705777094
+      Idle (34x28)_0: 4571226829092849726
+      Idle (34x28)_1: -8949856686944730191
+      Idle (34x28)_10: -1903310279220368910
+      Idle (34x28)_2: 2826186669421539911
+      Idle (34x28)_3: -5531042245258228581
+      Idle (34x28)_4: 2622321733923217370
+      Idle (34x28)_5: 4508922478542092599
+      Idle (34x28)_6: 850222469992291503
+      Idle (34x28)_7: -7622230470964513380
+      Idle (34x28)_8: -4453737675818896170
+      Idle (34x28)_9: -6983562990028683331
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

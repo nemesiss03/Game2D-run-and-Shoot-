@@ -1,0 +1,259 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &621687548619433094
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5483454741312648849}
+  - component: {fileID: 5773065306807801950}
+  - component: {fileID: 4061485581405952442}
+  - component: {fileID: 4345571233275893308}
+  - component: {fileID: 1964525098141802672}
+  - component: {fileID: 6594033308872256033}
+  - component: {fileID: 1479133112467430650}
+  m_Layer: 0
+  m_Name: CerdoBombardero
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5483454741312648849
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 621687548619433094}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &5773065306807801950
+SpriteRenderer:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 621687548619433094}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 282131219
+  m_SortingLayer: 3
+  m_SortingOrder: 3
+  m_MaskInteraction: 0
+  m_Sprite: {fileID: 3794035834349130110, guid: 2fe2cb321a0dfd644a311e5aed263d51, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1.625, y: 1.625}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_SpriteSortPoint: 0
+  m_BlendShapeWeights: []
+--- !u!50 &4061485581405952442
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 621687548619433094}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 3
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 1
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 4
+--- !u!61 &4345571233275893308
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 621687548619433094}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: 13b313082d734154fb373568bc375326, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0.475}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 1.625, y: 1.625}
+    newSize: {x: 1.625, y: 1.625}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 0.8, y: 0.95}
+  m_EdgeRadius: 0
+--- !u!114 &1964525098141802672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 621687548619433094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b553e35ec93a404694157f15c3b2dfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Salud
+  equipo: 1
+  vidaMaxima: 24
+  destruirAlMorir: 0
+  invulnerable: 0
+  puntosAlMorir: 200
+  alMorir:
+    m_PersistentCalls:
+      m_Calls: []
+  alCambiarVida:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &6594033308872256033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 621687548619433094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e7ff837273e0804b974bc57c128fb2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimadorCuadros
+  sr: {fileID: 5773065306807801950}
+--- !u!114 &1479133112467430650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 621687548619433094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c01ed85d1cc3354ba3ee673c16936ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CerdoBombardero
+  idle:
+  - {fileID: 3794035834349130110, guid: 2fe2cb321a0dfd644a311e5aed263d51, type: 3}
+  - {fileID: -1565747517632220677, guid: 2fe2cb321a0dfd644a311e5aed263d51, type: 3}
+  - {fileID: 1858418368325615276, guid: 2fe2cb321a0dfd644a311e5aed263d51, type: 3}
+  - {fileID: 150964584072231588, guid: 2fe2cb321a0dfd644a311e5aed263d51, type: 3}
+  - {fileID: -1971359709414138201, guid: 2fe2cb321a0dfd644a311e5aed263d51, type: 3}
+  - {fileID: -2139574477924349982, guid: 2fe2cb321a0dfd644a311e5aed263d51, type: 3}
+  - {fileID: 2763370092855089848, guid: 2fe2cb321a0dfd644a311e5aed263d51, type: 3}
+  - {fileID: -2979100537913490155, guid: 2fe2cb321a0dfd644a311e5aed263d51, type: 3}
+  - {fileID: 4399275431694793847, guid: 2fe2cb321a0dfd644a311e5aed263d51, type: 3}
+  - {fileID: 5060918234795731114, guid: 2fe2cb321a0dfd644a311e5aed263d51, type: 3}
+  correr:
+  - {fileID: 5644943528223871676, guid: 07a2c1ec6609b0745ad7619a881579d1, type: 3}
+  - {fileID: -5150452205479650860, guid: 07a2c1ec6609b0745ad7619a881579d1, type: 3}
+  - {fileID: 225017120357540247, guid: 07a2c1ec6609b0745ad7619a881579d1, type: 3}
+  - {fileID: -2676237883527604945, guid: 07a2c1ec6609b0745ad7619a881579d1, type: 3}
+  - {fileID: 7698027588294980629, guid: 07a2c1ec6609b0745ad7619a881579d1, type: 3}
+  - {fileID: -430356199405203401, guid: 07a2c1ec6609b0745ad7619a881579d1, type: 3}
+  atacar:
+  - {fileID: 4607896693067506194, guid: 3dde6d80d247469499191be97c165e8e, type: 3}
+  - {fileID: 2957344786624602907, guid: 3dde6d80d247469499191be97c165e8e, type: 3}
+  - {fileID: 8198067536325261399, guid: 3dde6d80d247469499191be97c165e8e, type: 3}
+  - {fileID: -3990226724952423534, guid: 3dde6d80d247469499191be97c165e8e, type: 3}
+  - {fileID: 1473363355492876116, guid: 3dde6d80d247469499191be97c165e8e, type: 3}
+  golpe:
+  - {fileID: 2604578367320382853, guid: 1a6b0d63b6fadf64d81f0cfc26412605, type: 3}
+  - {fileID: -4499412419590463543, guid: 1a6b0d63b6fadf64d81f0cfc26412605, type: 3}
+  muerte:
+  - {fileID: 4108480908939782669, guid: cf2f7f5997c8bbf409ce6510aff6bbe0, type: 3}
+  - {fileID: 3266320831729774885, guid: cf2f7f5997c8bbf409ce6510aff6bbe0, type: 3}
+  - {fileID: 4039707306575859641, guid: cf2f7f5997c8bbf409ce6510aff6bbe0, type: 3}
+  - {fileID: -3733869447192075300, guid: cf2f7f5997c8bbf409ce6510aff6bbe0, type: 3}
+  spriteMiraIzquierda: 1
+  velocidad: 2.8
+  bombaPrefab: {fileID: 1446733128145023543, guid: 7733b637452245f4ebd7a4657b0cf923, type: 3}
+  distanciaMin: 4.5
+  distanciaMax: 8
+  enfriamiento: 3.2
+  tiempoVuelo: 1
