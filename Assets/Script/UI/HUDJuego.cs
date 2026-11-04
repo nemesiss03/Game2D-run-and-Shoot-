@@ -112,23 +112,14 @@ public class HUDJuego : MonoBehaviour
             texto.text = Mathf.CeilToInt(salud.VidaActual) + " / " + Mathf.CeilToInt(salud.VidaMaxima);
     }
 
+    /// <summary>
+    /// El fuego se muestra solo con la BarraFuego y el orbe del pecho del dragón (sin textos ni números).
+    /// Los textos antiguos se ocultan.
+    /// </summary>
     void ActualizarFuego()
     {
-        if (jugador == null) return;
-
-        if (textoMunicion != null)
-            textoMunicion.text = jugador.Balas + " / " + jugador.CapacidadCargador;
-
-        if (textoEstadoArma == null) return;
-
-        if (jugador.Recargando)
-            textoEstadoArma.text = "ENFRIAMIENTO " + (jugador.ProgresoRecarga * 100f).ToString("0") + "%";
-        else if (jugador.Balas <= 0)
-            textoEstadoArma.text = "SIN FUEGO";
-        else if (jugador.Balas < jugador.CapacidadCargador)
-            textoEstadoArma.text = "PULSA R PARA ENFRIAR";
-        else
-            textoEstadoArma.text = string.Empty;
+        if (textoMunicion != null && textoMunicion.gameObject.activeSelf) textoMunicion.gameObject.SetActive(false);
+        if (textoEstadoArma != null && textoEstadoArma.gameObject.activeSelf) textoEstadoArma.gameObject.SetActive(false);
     }
 
     public void MostrarAviso(string mensaje, float duracion)

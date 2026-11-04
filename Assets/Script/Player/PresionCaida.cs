@@ -26,6 +26,7 @@ public class PresionCaida : MonoBehaviour
     Raya[] cuerpo;
     Sprite spriteRaya;
     Image vineta;
+    Canvas canvasVineta;   // se guarda aparte: Image.canvas devuelve null si el Canvas está desactivado
     float proximaRafaga, finRafaga, arranque;
     float proximoCuerpo;
 
@@ -61,7 +62,7 @@ public class PresionCaida : MonoBehaviour
     void OnDestroy()
     {
         Intensidad = 1f;
-        if (vineta != null) Destroy(vineta.canvas.gameObject);
+        if (canvasVineta != null) Destroy(canvasVineta.gameObject);
     }
 
     void OnDisable()
@@ -74,13 +75,13 @@ public class PresionCaida : MonoBehaviour
         if (!CaidaInfinita.EstaActiva)
         {
             Intensidad = 1f;
-            if (vineta != null) vineta.canvas.enabled = false;
+            if (canvasVineta != null) canvasVineta.enabled = false;
             Ocultar(pantalla);
             Ocultar(cuerpo);
             return;
         }
 
-        if (vineta != null) vineta.canvas.enabled = true;
+        if (canvasVineta != null) canvasVineta.enabled = true;
 
         float subida = Mathf.Clamp01((Time.time - arranque) / 1.5f);
 
@@ -210,6 +211,7 @@ public class PresionCaida : MonoBehaviour
         Canvas cv = go.AddComponent<Canvas>();
         cv.renderMode = RenderMode.ScreenSpaceOverlay;
         cv.sortingOrder = -5;   // por debajo del HUD
+        canvasVineta = cv;
 
         GameObject im = new GameObject("Vineta");
         im.transform.SetParent(go.transform, false);

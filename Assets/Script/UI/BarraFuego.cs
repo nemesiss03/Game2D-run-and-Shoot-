@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Barra de fuego del HUD (abajo a la derecha, bajo el contador): se gasta con cada bola de fuego,
+/// Barra de fuego del HUD (abajo a la derecha): se gasta con cada bola de fuego,
 /// deja una estela clara que se vacía despacio y, al enfriar, se rellena mostrando el progreso.
 /// Se divide en una marca por carga: si cambias PlayerController.cargasMaximas se adapta sola.
 /// La crea HUDJuego; no hace falta ponerla en la escena.
@@ -37,8 +37,8 @@ public class BarraFuego : MonoBehaviour
         RectTransform rt = (RectTransform)transform;
         rt.anchorMin = rt.anchorMax = new Vector2(1f, 0f);
         rt.pivot = new Vector2(1f, 0f);
-        rt.anchoredPosition = new Vector2(-32f, 34f);
-        rt.sizeDelta = new Vector2(360f, 26f);
+        rt.anchoredPosition = new Vector2(-32f, 40f);
+        rt.sizeDelta = new Vector2(420f, 30f);
 
         marco = Panel(rt, "Marco", new Color(0f, 0f, 0f, 0.75f));
         Estirar(marco.rectTransform, 0f);
