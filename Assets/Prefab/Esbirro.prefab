@@ -185,6 +185,7 @@ MonoBehaviour:
   vidaMaxima: 20
   destruirAlMorir: 1
   invulnerable: 0
+  puntosAlMorir: 100
   alMorir:
     m_PersistentCalls:
       m_Calls: []
@@ -207,7 +208,7 @@ MonoBehaviour:
   velocidadHorizontal: 3.6
   velocidadVertical: 6
   distanciaDanio: 1.05
-  danio: 3
+  danio: 10
   enfriamientoDanio: 2
   probabilidadOrbe: 0.35
   orbeCuracionPrefab: {fileID: 5015812615238259119, guid: d34f2c99911388c4b98a9623bc6d0cac, type: 3}

@@ -28,7 +28,7 @@ public class EnemigoVoladorDisparador : MonoBehaviour
     public int proyectilesPorDisparo = 1;
     public float velocidadBala = 7.5f;
     public float vidaBala = 4f;
-    public float danioBala = 5f;
+    public float danioBala = 10f;
     [Tooltip("En modo Azar, el disparo se desvía hasta estos grados respecto al jugador.")]
     public float dispersionAzar = 50f;
     [Tooltip("En modo Azar, probabilidad de disparar en una dirección totalmente aleatoria.")]

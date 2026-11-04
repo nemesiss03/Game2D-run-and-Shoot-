@@ -336,7 +336,7 @@ public static partial class ConstructorNiveles
     static readonly string[] BorrarPorNombre =
     {
         "1_0", "2_0", "Grass(Group)", "Enemy03_Idle_RP1 (32x36)_0", "GenerationEnemi", "Abismos", "lasto Pint",
-        "FondoParallax", "Decoracion", "Objetos", "Enemigos", "Portales", "Meta", "ObjetivoCamara", "Arranque", "Zonas", "Ambiente", "AmbienteNieve", "FondoMontana"
+        "FondoParallax", "Decoracion", "Objetos", "Enemigos", "Portales", "Meta", "ObjetivoCamara", "Arranque", "Zonas", "Ambiente", "AmbienteNieve", "FondoMontana", "Trampas"
     };
 
     static void LimpiarNivel1()
@@ -424,6 +424,9 @@ public static partial class ConstructorNiveles
         Transform enemigos = Padre("Enemigos");
         foreach (int x in new[] { 24, 38, 48, 70, 82, 104, 120, 135, 150, 165 })
             if (superficie.ContainsKey(x)) Poner(enemigo, x + 0.5f, enemigos, 0.8f);
+
+        // Púas emergentes sobre suelo llano
+        CrearTrampasPuas(new[] { 30, 62, 86, 110, 126, 146, 160 });
 
         // Portales: solo en el suelo, sacan enemigos terrestres
         CrearPortales(enemigo, new[] { 20, 45, 60, 80, 100, 125, 140, 162 }, 1.3f, 8f, 13f, 1);

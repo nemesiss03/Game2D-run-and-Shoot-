@@ -11,7 +11,7 @@ public class Esbirro : MonoBehaviour
     public float velocidadHorizontal = 3.6f;
     public float velocidadVertical = 6f;
     public float distanciaDanio = 1.05f;
-    public float danio = 3f;
+    public float danio = 10f;
     public float enfriamientoDanio = 2f;
 
     [Header("Orbe de curación")]

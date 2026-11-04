@@ -15,6 +15,10 @@ public class PuasEmergentes : MonoBehaviour
     [Tooltip("Cuánto tiembla el sprite durante el aviso.")]
     public float vibracionAviso = 0.04f;
 
+    [Header("Fotogramas (opcional)")]
+    [Tooltip("Oculta, aviso y activa. Si se rellena, las púas cambian de dibujo en vez de subir desde el suelo.")]
+    public Sprite[] fotogramas;
+
     [Header("Ciclo (segundos)")]
     public float tiempoOculta = 2f;
     public float tiempoAviso = 0.5f;
@@ -31,6 +35,7 @@ public class PuasEmergentes : MonoBehaviour
     float reloj;
     float alturaActual;
     Vector3 posBase;
+    SpriteRenderer[] dibujos;
 
     void Awake()
     {
@@ -39,7 +44,12 @@ public class PuasEmergentes : MonoBehaviour
 
     void Start()
     {
-        if (visual != null) posBase = visual.localPosition;
+        if (visual != null)
+        {
+            posBase = visual.localPosition;
+            dibujos = visual.GetComponentsInChildren<SpriteRenderer>();
+        }
+        PonerDibujo(Fase.Oculta);
         reloj = -desfase;
         zona.activa = false;
     }
@@ -76,9 +86,18 @@ public class PuasEmergentes : MonoBehaviour
     {
         fase = nueva;
         reloj = 0f;
+        PonerDibujo(nueva);
         zona.activa = nueva == Fase.Activa;
 
         if (nueva == Fase.Aviso) alAvisar.Invoke();
         if (nueva == Fase.Activa) alEmerger.Invoke();
+    }
+
+    void PonerDibujo(Fase f)
+    {
+        if (fotogramas == null || fotogramas.Length == 0 || dibujos == null) return;
+
+        int i = Mathf.Min((int)f, fotogramas.Length - 1);
+        for (int k = 0; k < dibujos.Length; k++) dibujos[k].sprite = fotogramas[i];
     }
 }

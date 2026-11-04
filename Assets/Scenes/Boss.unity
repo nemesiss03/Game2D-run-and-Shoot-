@@ -245,7 +245,12 @@ MonoBehaviour:
   esperaEntreProyectiles: 0.12
   velocidadProyectil: 8.5
   vidaProyectil: 5
-  danioProyectil: 5
+  danioProyectil: 10
+  cadenciaOrbe: 4.6
+  danioOrbe: 22
+  velocidadOrbe: 7
+  cadenciaAtaqueU: 17
+  primerAtaqueU: 11
   portalPrefab: {fileID: 3564464410052208185, guid: 58f22ba2b43caa34290eda4cf4f560e6, type: 3}
   cadenciaPortales: 12
   portalesPorAtaque: 2

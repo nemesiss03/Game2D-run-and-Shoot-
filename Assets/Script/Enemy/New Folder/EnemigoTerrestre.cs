@@ -18,7 +18,7 @@ public class EnemigoTerrestre : MonoBehaviour
     public float tiempoEntreGiros = 0.3f;
 
     [Header("Daño por contacto")]
-    public float danio = 4f;
+    public float danio = 14f;
     public float enfriamientoDanio = 1f;
 
     [Header("Sprite")]

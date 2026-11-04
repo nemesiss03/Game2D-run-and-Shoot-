@@ -31,7 +31,16 @@ public class JefeFlotante : MonoBehaviour
     public float esperaEntreProyectiles = 0.12f;
     public float velocidadProyectil = 8.5f;
     public float vidaProyectil = 5f;
-    public float danioProyectil = 5f;
+    public float danioProyectil = 10f;
+
+    [Header("Fase 2 · Orbe del abismo (sustituye a los proyectiles)")]
+    public float cadenciaOrbe = 4.6f;
+    public float danioOrbe = 22f;
+    public float velocidadOrbe = 7f;
+
+    [Header("Ataque en U")]
+    public float cadenciaAtaqueU = 17f;
+    public float primerAtaqueU = 11f;
 
     [Header("Habilidad 2 · Portales")]
     public GameObject portalPrefab;
@@ -61,6 +70,7 @@ public class JefeFlotante : MonoBehaviour
     float baseY;
     float proximoDisparo;
     float proximoPortal;
+    float proximoAtaqueU;
     bool derrotado;
     float proximoRetarget;
 
@@ -98,6 +108,7 @@ public class JefeFlotante : MonoBehaviour
 
         proximoDisparo = Time.time + 1.5f;
         proximoPortal = Time.time + 9f;
+        proximoAtaqueU = Time.time + primerAtaqueU;
     }
 
     void OnDestroy()
@@ -147,11 +158,26 @@ public class JefeFlotante : MonoBehaviour
     {
         if (derrotado || objetivo == null) return;
 
-        // Habilidad 1: proyectiles
-        if (Time.time >= proximoDisparo)
+        // Ataque en U: avisa, apaga los láseres y barre los bordes de la pantalla
+        if (Time.time >= proximoAtaqueU && !AtaqueEnU.Activo)
         {
-            proximoDisparo = Time.time + cadenciaDisparo;
-            StartCoroutine(Rafaga());
+            proximoAtaqueU = Time.time + (faseCaida ? cadenciaAtaqueU * 0.75f : cadenciaAtaqueU);
+            AtaqueEnU.Iniciar();
+        }
+
+        // Habilidad 1: proyectiles (fase 1) u orbe del abismo (fase 2)
+        if (Time.time >= proximoDisparo && !AtaqueEnU.Activo)
+        {
+            if (faseCaida)
+            {
+                proximoDisparo = Time.time + cadenciaOrbe;
+                LanzarOrbe();
+            }
+            else
+            {
+                proximoDisparo = Time.time + cadenciaDisparo;
+                StartCoroutine(Rafaga());
+            }
         }
 
         // Habilidad 2: portales con esbirros
@@ -201,6 +227,15 @@ public class JefeFlotante : MonoBehaviour
         }
     }
 
+    void LanzarOrbe()
+    {
+        if (objetivo == null) return;
+
+        if (animador != null) animador.SetTrigger(hashAtacar);
+        AudioJuego.SonidoInvocacion();
+        OrbeAbismo.Crear(transform, objetivo, danioOrbe, velocidadOrbe);
+    }
+
     // ---------------------------------------------------------------- Habilidad 2
     void AbrirPortales()
     {
@@ -239,7 +274,7 @@ public class JefeFlotante : MonoBehaviour
         if (jugador != null) jugador.ActivarCaidaLibre();
 
         // El jefe se vuelve más agresivo en la fase final
-        cadenciaDisparo = Mathf.Max(0.85f, cadenciaDisparo * 0.7f);
+        proximoDisparo = Time.time + 2f;
         cadenciaPortales = Mathf.Max(4.5f, cadenciaPortales * 0.7f);
 
         // Además, 5 láseres que apuntan al jugador desde los bordes de la pantalla
@@ -261,6 +296,7 @@ public class JefeFlotante : MonoBehaviour
 
         // La caída infinita y los láseres terminan al ganar
         CaidaInfinita.DetenerGlobal();
+        AtaqueEnU.Detener();
         SistemaLasers.Detener();
 
         // El dragón vuela de victoria y la pantalla de victoria aparece mientras tanto

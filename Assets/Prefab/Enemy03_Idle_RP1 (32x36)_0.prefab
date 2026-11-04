@@ -185,6 +185,7 @@ MonoBehaviour:
   vidaMaxima: 10
   destruirAlMorir: 1
   invulnerable: 0
+  puntosAlMorir: 100
   alMorir:
     m_PersistentCalls:
       m_Calls: []
@@ -208,10 +209,10 @@ MonoBehaviour:
   rangoDeteccion: 7
   capaSuelo:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 0
   distanciaFrente: 0.5
   distanciaPiso: 0.6
   tiempoEntreGiros: 0.3
-  danio: 4
+  danio: 14
   enfriamientoDanio: 1
   spriteMiraDerecha: 1

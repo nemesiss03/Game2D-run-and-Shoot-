@@ -215,7 +215,7 @@ MonoBehaviour:
   proyectilesPorDisparo: 2
   velocidadBala: 7.5
   vidaBala: 4
-  danioBala: 5
+  danioBala: 10
   dispersionAzar: 50
   probabilidadLoca: 0.2
   frames:

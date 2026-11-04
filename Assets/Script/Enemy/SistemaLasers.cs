@@ -12,6 +12,9 @@ public class SistemaLasers : MonoBehaviour
 {
     static SistemaLasers instancia;
 
+    /// <summary>Mientras es true los láseres no cargan ni disparan (lo usa el ataque en U del jefe).</summary>
+    public static bool Pausado;
+
     [Header("Ciclo de cada láser")]
     public float tiempoCarga = 1.9f;
     [Tooltip("Parte de la carga (0 a 1) durante la que el láser sigue al jugador. Después queda fijo.")]
@@ -25,7 +28,7 @@ public class SistemaLasers : MonoBehaviour
     public float segundosDeCalma = 8f;
 
     [Header("Daño")]
-    public float danio = 14f;
+    public float danio = 22f;
     [Tooltip("Mitad del ancho del rayo. Lo que se dibuja es exactamente lo que daña.")]
     public float mitadAnchoRayo = 0.28f;
     [Tooltip("Cuánto del cuerpo del dragón cuenta para el impacto (su colisión es de cerca de 0,7 de radio).")]
@@ -54,6 +57,7 @@ public class SistemaLasers : MonoBehaviour
     {
         if (instancia == null) return;
 
+        Pausado = false;
         instancia.encendido = false;
         Destroy(instancia.gameObject);
         instancia = null;
@@ -109,6 +113,9 @@ public class SistemaLasers : MonoBehaviour
 
         while (encendido)
         {
+            while (Pausado && encendido) yield return null;
+            if (!encendido) break;
+
             Transform objetivo = Jugadores.MasCercano(posicion);
             if (objetivo == null) { yield return new WaitForSeconds(0.5f); continue; }
 
@@ -120,8 +127,12 @@ public class SistemaLasers : MonoBehaviour
             Vector2 dir = Vector2.right;
             float t = 0f;
 
+            bool cancelado = false;
+
             while (t < tiempoCarga && encendido)
             {
+                if (Pausado) { cancelado = true; break; }
+
                 float p = t / tiempoCarga;
 
                 if (p < seguirHasta && objetivo != null)
@@ -147,6 +158,14 @@ public class SistemaLasers : MonoBehaviour
 
             if (!encendido) break;
 
+            if (cancelado)
+            {
+                linea.enabled = false;
+                anillo.color = new Color(1f, 0.25f, 0.2f, 0f);
+                activos = Mathf.Max(0, activos - 1);
+                continue;
+            }
+
             // ---- Disparo: rayo grueso con la dirección fijada
             AudioJuego.SonidoDisparoJefe();
             EfectosJuego.Fogonazo(posicion, dir, 1.4f);
@@ -159,7 +178,7 @@ public class SistemaLasers : MonoBehaviour
                 PintarLinea(linea, posicion, dir, mitadAnchoRayo * 2f, new Color(1f, 0.95f, 0.85f, 1f));
                 anillo.color = new Color(1f, 1f, 1f, 1f);
 
-                if (!golpeado) golpeado = ComprobarImpacto(posicion, dir);
+                if (!golpeado && !Pausado) golpeado = ComprobarImpacto(posicion, dir);
 
                 d += Time.deltaTime;
                 yield return null;

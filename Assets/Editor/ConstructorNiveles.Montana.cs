@@ -98,6 +98,8 @@ public static partial class ConstructorNiveles
         GameObject esbirro = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabEsbirro);
         CrearPortalesPuntos(esbirro, anclas, 8f, 13f, 2);
 
+        CrearTrampasPuas(new[] { 4, 22, 33, 44, 60, 84, 130, 164 });
+
         CrearAmbiente(true);
         CrearAbismo(-8f, 192f);
 
