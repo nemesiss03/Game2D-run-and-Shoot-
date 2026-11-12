@@ -73,3 +73,10 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# Builds de prueba y capturas (no versionar)
+/Test play/
+*.rar
+*.zip
+/Assets/Screenshots/
+/Assets/Screenshots.meta
