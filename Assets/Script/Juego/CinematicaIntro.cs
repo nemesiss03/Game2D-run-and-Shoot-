@@ -28,8 +28,12 @@ public class CinematicaIntro : MonoBehaviour
 
     static void AlCargarEscena(Scene escena, LoadSceneMode modo) { Comprobar(); }
 
+    /// <summary>Pon true para volver a ver la cinemática de apertura al empezar el Nivel 1.</summary>
+    public static bool Habilitada = false;
+
     static void Comprobar()
     {
+        if (!Habilitada) return;
         if (Vista) return;
         if (SceneManager.GetActiveScene().name != "Nivel1") return;
         if (FindAnyObjectByType<CinematicaIntro>() != null) return;
