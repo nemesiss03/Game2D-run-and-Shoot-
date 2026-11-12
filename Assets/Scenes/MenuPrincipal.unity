@@ -1270,7 +1270,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: ABYSS HUNTER
+  m_Text: DRAGON WARRIOR
 --- !u!114 &366540080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6803,7 +6803,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "SPIRIT DRAGON: ABYSS HUNTER \xB7 v1.0"
+  m_Text: "DRAGON WARRIOR \xB7 v1.0"
 --- !u!222 &1545869253
 CanvasRenderer:
   m_ObjectHideFlags: 0

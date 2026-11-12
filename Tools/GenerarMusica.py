@@ -4,7 +4,7 @@ Genera la música de Spirit Dragon: Abyss Hunter (4 pistas en bucle, sintetizada
 Uso:  python Tools/GenerarMusica.py [carpeta_salida]
 Salida por defecto: Assets/Resources/Audio/Musica/
 
-  musica_nivel1.wav  Bosque        D mayor   108 bpm  aventura cálida
+  musica_nivel1.wav  Inicio        G mayor   132 bpm  fanfarria de aventura (tema original)
   musica_nivel2.wav  Rey Cerdo     E menor   128 bpm  marcha pesada y burlona
   musica_nivel3.wav  Montaña       A menor    84 bpm  frío, amplio, épico
   musica_boss.wav    Señor Abismo  D menor   148 bpm  ataque constante
@@ -185,7 +185,7 @@ def acorde(raiz, tipo):
 
 
 # ================================================================ NIVEL 1 · BOSQUE
-def nivel1():
+def nivel1_bosque_antiguo():
     p = Pista(108, 16)
     ac = [("D3", "M"), ("A2", "M"), ("B2", "m"), ("G2", "M")] * 2 + \
          [("D3", "M"), ("A2", "M"), ("B2", "m"), ("G2", "M"), ("G2", "M"), ("A2", "M"), ("D3", "M"), ("D3", "M")]
@@ -412,6 +412,74 @@ def boss():
     p.melodia("s", 8, L, SAW, 0.20, a=0.006, decaimiento=0.4, sost=0.8, r=0.06, vib=0.004)
     p.melodia("s", 16, L3, P25, 0.22, a=0.006, decaimiento=0.4, sost=0.8, r=0.06, vib=0.004)
     p.melodia("s", 16, L, SAW, 0.14, a=0.006, decaimiento=0.4, sost=0.8, r=0.06)
+    return p
+
+
+# ================================================================ NIVEL 1 · "INICIO DE LA AVENTURA" (tema original)
+def nivel1():
+    """Fanfarria heroica en Sol mayor, 132 bpm, 16 compases. Melodía y armonía propias."""
+    p = Pista(132, 16)
+    ac = [("G2", "M"), ("D3", "M"), ("E3", "m"), ("C3", "M"),
+          ("G2", "M"), ("D3", "M"), ("C3", "M"), ("D3", "M"),
+          ("E3", "m"), ("C3", "M"), ("G2", "M"), ("D3", "M"),
+          ("C3", "M"), ("D3", "M"), ("G2", "M"), ("G2", "M")]
+
+    A = [["D5", "_", "G5", "_", "B5", "_", "D6", "_"],
+         ["B5", "_", "A5", "_", "F#5", "_", "A5", "_"],
+         ["G5", "_", "B5", "_", "E6", "_", "D6", "B5"],
+         ["C6", "_", "G5", "_", "E5", "_", "G5", "_"]]
+    A2 = [["D5", "_", "G5", "_", "B5", "_", "D6", "_"],
+          ["E6", "_", "D6", "_", "A5", "_", "F#5", "_"],
+          ["G5", "_", "C6", "_", "E6", "_", "D6", "C6"],
+          ["B5", "_", "_", "_", "A5", "_", "_", "_"]]
+    B = [["E6", "_", "D6", "B5", "G5", "_", "B5", "D6"],
+         ["C6", "_", "B5", "G5", "E5", "_", "G5", "C6"],
+         ["B5", "_", "D6", "_", "G6", "_", "D6", "_"],
+         ["A5", "_", "F#5", "_", "A5", "_", "D6", "_"]]
+    C = [["E6", "_", "D6", "_", "C6", "_", "G5", "_"],
+         ["F#5", "_", "A5", "_", "D6", "_", "A5", "_"],
+         ["G5", "_", "B5", "_", "D6", "_", "G6", "_"],
+         ["G6", "_", "_", "_", "B5", "_", "_", "_"]]
+    melodia = A + A2 + B + C
+
+    for c, (raiz, tipo) in enumerate(ac):
+        notas = acorde(raiz, tipo)
+        fund = notas[0]
+        # colchón de cuerdas
+        for nt in notas:
+            p.voz("h", p.t(c), 8 * p.paso, hz(nt + 12), SOFT, 0.07, a=0.25, decaimiento=2.0, sost=0.9, r=0.4)
+        # bajo en corcheas con salto de octava: empuja hacia delante
+        for k in range(8):
+            val = fund + 12 if k in (2, 6) else fund
+            p.voz("s", p.t(c, k), 0.9 * p.paso, hz(val), TRI, 0.34, a=0.003, decaimiento=0.12, sost=0.45, r=0.03)
+        # arpegio rápido de pluma desde la sección B
+        if c >= 8:
+            for k in range(16):
+                nt = notas[k % 3] + 24
+                p.voz("h", p.t(c, k * 0.5), 0.5 * p.paso, hz(nt), P125, 0.07, a=0.002, decaimiento=0.05, sost=0.0, r=0.03)
+        # percusión: timbal solo en los 2 primeros compases, ritmo completo después
+        if c < 2:
+            p.timbal(p.t(c, 0), 70.0, 0.5)
+            p.timbal(p.t(c, 4), 85.0, 0.4)
+        else:
+            p.bombo(p.t(c, 0), 0.38)
+            p.bombo(p.t(c, 4), 0.34)
+            if c >= 4:
+                p.bombo(p.t(c, 3), 0.20)
+            p.caja(p.t(c, 2), 0.18)
+            p.caja(p.t(c, 6), 0.18)
+            for k in range(0, 8):
+                p.hat(p.t(c, k), 0.07 if k % 2 == 0 else 0.11)
+        # redoble antes del cambio de sección y del bucle
+        if c in (7, 15):
+            for k in range(8):
+                p.caja(p.t(c, 4 + k * 0.5), 0.12 + 0.025 * k)
+
+    # melodía principal (pulso 25 %) con refuerzos: flauta suave siempre, trompeta en la sección final
+    p.melodia("s", 0, melodia, P25, 0.27, a=0.008, decaimiento=0.5, sost=0.75, r=0.08, vib=0.004)
+    p.melodia("h", 0, melodia, SOFT, 0.10, a=0.01, decaimiento=0.5, sost=0.7, r=0.1)
+    p.melodia("s", 12, C, BRASS, 0.14, a=0.02, decaimiento=0.5, sost=0.8, r=0.1)
+    p.melodia("s", 8, B, P125, 0.08, a=0.008, decaimiento=0.4, sost=0.7, r=0.06)
     return p
 
 

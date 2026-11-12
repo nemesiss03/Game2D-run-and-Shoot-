@@ -100,7 +100,7 @@ public static class ConstructorMenu
         // ==================== PRINCIPAL ====================
         RectTransform titulo = CrearTitulo(panelPrincipal.transform, "SPIRIT DRAGON", 130, new Vector2(0f, 265f));
 
-        Text sub = CrearTexto(panelPrincipal.transform, "Subtitulo", "ABYSS HUNTER", 44,
+        Text sub = CrearTexto(panelPrincipal.transform, "Subtitulo", "DRAGON WARRIOR", 44,
             Crema, new Vector2(0f, 150f), new Vector2(1000f, 60f), TextAnchor.MiddleCenter);
         sub.fontStyle = FontStyle.BoldAndItalic;
 
@@ -108,7 +108,7 @@ public static class ConstructorMenu
         Button bConfig = CrearBoton(panelPrincipal.transform, "BotonConfig", "OPCIONES", new Vector2(0f, -105f), new Vector2(520f, 112f), Crema);
         Button bSalir = CrearBoton(panelPrincipal.transform, "BotonSalir", "SALIR", new Vector2(0f, -230f), new Vector2(520f, 112f), new Color(1f, 0.55f, 0.5f, 1f));
 
-        Text version = CrearTexto(panelPrincipal.transform, "Version", "SPIRIT DRAGON: ABYSS HUNTER · v1.0", 26,
+        Text version = CrearTexto(panelPrincipal.transform, "Version", "DRAGON WARRIOR · v1.0", 26,
             new Color(1f, 1f, 1f, 0.65f), Vector2.zero, new Vector2(420f, 40f), TextAnchor.MiddleRight);
         Anclar(version.rectTransform, new Vector2(1f, 0f), new Vector2(1f, 0f), new Vector2(-230f, 40f));
 
